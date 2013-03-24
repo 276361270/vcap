@@ -1,0 +1,1 @@
+config:x86:x86_32:generic:mingw32:gcc 4.6.2 (GCC):--enable-shared --enable-small --disable-static --bindir=../../bin/ --libdir=../../bin/ --incdir=../../bin/include --disable-ffplay
