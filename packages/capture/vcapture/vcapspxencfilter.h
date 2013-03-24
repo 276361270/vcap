@@ -5,14 +5,11 @@
 
 class VCapFilter;
 struct SpeexBits;
-class VCapSpxEncFilter : public IDsxCallback
+class VCapSpxEncFilter
 {
 public:
 	VCapSpxEncFilter();
 	~VCapSpxEncFilter();
-
-public:
-	virtual void	onData(IMediaSample* src, IMediaSample* dest);
 
 public:
 	void		init();
@@ -20,9 +17,6 @@ public:
 
 private:
 	VCapFilter*		m_pFilter;
-	void*			m_pSpxState;
-	SpeexBits		m_spxBits;
-	int				m_nFrameSize;
 };
 
 #endif

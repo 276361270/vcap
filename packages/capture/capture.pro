@@ -3,11 +3,10 @@ TARGET =
 DEPENDPATH += .
 INCLUDEPATH += .
 
-SUBDIRS =   \
+SUBDIRS =   		\
 	  baseclasses	\
-	  dsrfilter		\
-	  libspeex		\
-	  dsxfilter		\
       vcapture      \
+      x264filter	\
+      speexfilter		\
       
 	

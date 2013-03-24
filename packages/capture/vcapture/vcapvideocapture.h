@@ -8,7 +8,6 @@ class VCapCamera;
 class VCapVMRRender;
 class VCapVideoEncoder;
 class VCapFileFilter;
-class VCapNetFilter;
 class VCapVideoCapture : public IVCapVideoCapture
 {
 public:
@@ -28,7 +27,6 @@ private:
 	VCapCamera*		m_pCamera;
 	VCapVideoEncoder*	m_pEncoder;		
 	VCapFileFilter*	m_pFileFilter;
-	VCapNetFilter*	m_pNetFilter;
 	VCapVMRRender*	m_pVMRRender;
 
 	std::vector<VCapCamera*>	m_arrCameras;

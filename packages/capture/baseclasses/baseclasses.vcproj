@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioProject
+	ProjectType="Visual C++"
+	Version="9,00"
+	Name="baseclasses"
+	ProjectGUID="{27919050-7297-3D88-BE51-34DE562E7CAE}"
+	Keyword="Qt4VSv1.0">
+	<Platforms>
+		<Platform
+			Name="Win32" />
+	</Platforms>
+	<Configurations>
+		<Configuration
+			Name="Debug|Win32"
+			OutputDirectory="..\..\..\bin\debug\"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="1"
+			ConfigurationType="4"
+			IntermediateDirectory="debug\"
+			UseOfMfc="0">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\..\..\bin\include&quot;,c:\Qt\4.8.4\mkspecs\win32-msvc2008"
+				AdditionalOptions="-Zm200 /MP -w34189"
+				AssemblerListingLocation="debug\"
+				BufferSecurityCheck="true"
+				DebugInformationFormat="3"
+				ExceptionHandling="0"
+				GeneratePreprocessedFile="0"
+				ObjectFile="debug\"
+				Optimization ="4"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,DUI_ACCESSIBLE,UNICODE,_CRT_NON_CONFORMING_SWPRINTFS,_CRT_SECURE_NO_WARNINGS"
+				ProgramDataBaseFileName="$(IntDir)"
+				RuntimeLibrary="3"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				TreatWChar_tAsBuiltInType="false"
+				WarningLevel="3" />
+			<Tool
+				Name="VCCustomBuildTool" />
+			<Tool
+				Name="VCLibrarianTool"
+				OutputFile="$(OutDir)\baseclasses.lib"
+				SuppressStartupBanner="true" />
+			<Tool
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0" />
+			<Tool
+				Name="VCPostBuildEventTool" />
+			<Tool
+				Name="VCPreBuildEventTool" />
+			<Tool
+				Name="VCPreLinkEventTool" />
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,DUI_ACCESSIBLE,UNICODE,_CRT_NON_CONFORMING_SWPRINTFS,_CRT_SECURE_NO_WARNINGS,_DEBUG"
+				ResourceOutputFileName="$(OutDir)\$(InputName).res" />
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="..\..\..\bin\release\"
+			ATLMinimizesCRunTimeLibraryUsage="false"
+			CharacterSet="1"
+			ConfigurationType="4"
+			IntermediateDirectory="release\"
+			UseOfMfc="0">
+			<Tool
+				Name="VCCLCompilerTool"
+				AdditionalIncludeDirectories="&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\..\..\bin\include&quot;,c:\Qt\4.8.4\mkspecs\win32-msvc2008"
+				AdditionalOptions="-Zm200 /MP -w34189"
+				AssemblerListingLocation="release\"
+				BufferSecurityCheck="true"
+				DebugInformationFormat="3"
+				ExceptionHandling="0"
+				GeneratePreprocessedFile="0"
+				ObjectFile="release\"
+				Optimization ="2"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,DUI_ACCESSIBLE,UNICODE,_CRT_NON_CONFORMING_SWPRINTFS,_CRT_SECURE_NO_WARNINGS,NDEBUG"
+				ProgramDataBaseFileName="$(IntDir)"
+				RuntimeLibrary="2"
+				RuntimeTypeInfo="true"
+				SuppressStartupBanner="true"
+				TreatWChar_tAsBuiltInType="false"
+				WarningLevel="3" />
+			<Tool
+				Name="VCCustomBuildTool" />
+			<Tool
+				Name="VCLibrarianTool"
+				OutputFile="$(OutDir)\baseclasses.lib"
+				SuppressStartupBanner="true" />
+			<Tool
+				Name="VCMIDLTool"
+				DefaultCharType="0"
+				EnableErrorChecks="1"
+				WarningLevel="0" />
+			<Tool
+				Name="VCPostBuildEventTool" />
+			<Tool
+				Name="VCPreBuildEventTool" />
+			<Tool
+				Name="VCPreLinkEventTool" />
+			<Tool
+				Name="VCResourceCompilerTool"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,DUI_ACCESSIBLE,UNICODE,_CRT_NON_CONFORMING_SWPRINTFS,_CRT_SECURE_NO_WARNINGS"
+				ResourceOutputFileName="$(OutDir)\$(InputName).res" />
+		</Configuration>
+	</Configurations>
+	<Files>
+		<Filter
+			Name="Source Files"
+			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			<File
+				RelativePath="amextra.cpp" />
+			<File
+				RelativePath="amfilter.cpp" />
+			<File
+				RelativePath="amvideo.cpp" />
+			<File
+				RelativePath="arithutil.cpp" />
+			<File
+				RelativePath="combase.cpp" />
+			<File
+				RelativePath="cprop.cpp" />
+			<File
+				RelativePath="ctlutil.cpp" />
+			<File
+				RelativePath="ddmm.cpp" />
+			<File
+				RelativePath="dllentry.cpp" />
+			<File
+				RelativePath="dllsetup.cpp" />
+			<File
+				RelativePath="mtype.cpp" />
+			<File
+				RelativePath="outputq.cpp" />
+			<File
+				RelativePath="perflog.cpp" />
+			<File
+				RelativePath="pstream.cpp" />
+			<File
+				RelativePath="pullpin.cpp" />
+			<File
+				RelativePath="refclock.cpp" />
+			<File
+				RelativePath="renbase.cpp" />
+			<File
+				RelativePath="schedule.cpp" />
+			<File
+				RelativePath="seekpt.cpp" />
+			<File
+				RelativePath="source.cpp" />
+			<File
+				RelativePath="strmctl.cpp" />
+			<File
+				RelativePath="sysclock.cpp" />
+			<File
+				RelativePath="transfrm.cpp" />
+			<File
+				RelativePath="transip.cpp" />
+			<File
+				RelativePath="videoctl.cpp" />
+			<File
+				RelativePath="vtrans.cpp" />
+			<File
+				RelativePath="winctrl.cpp" />
+			<File
+				RelativePath="winutil.cpp" />
+			<File
+				RelativePath="wxdebug.cpp" />
+			<File
+				RelativePath="wxlist.cpp" />
+			<File
+				RelativePath="wxutil.cpp" />
+		</Filter>
+		<Filter
+			Name="Header Files"
+			Filter="h;hpp;hxx;hm;inl;inc;xsd"
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			<File
+				RelativePath="amextra.h" />
+			<File
+				RelativePath="amfilter.h" />
+			<File
+				RelativePath="cache.h" />
+			<File
+				RelativePath="checkbmi.h" />
+			<File
+				RelativePath="combase.h" />
+			<File
+				RelativePath="cprop.h" />
+			<File
+				RelativePath="ddmm.h" />
+			<File
+				RelativePath="dllsetup.h" />
+			<File
+				RelativePath="dxmperf.h" />
+			<File
+				RelativePath="fourcc.h" />
+			<File
+				RelativePath="measure.h" />
+			<File
+				RelativePath="msgthrd.h" />
+			<File
+				RelativePath="mtype.h" />
+			<File
+				RelativePath="outputq.h" />
+			<File
+				RelativePath="perflog.h" />
+			<File
+				RelativePath="perfstruct.h" />
+			<File
+				RelativePath="pstream.h" />
+			<File
+				RelativePath="pullpin.h" />
+			<File
+				RelativePath="refclock.h" />
+			<File
+				RelativePath="reftime.h" />
+			<File
+				RelativePath="renbase.h" />
+			<File
+				RelativePath="schedule.h" />
+			<File
+				RelativePath="seekpt.h" />
+			<File
+				RelativePath="source.h" />
+			<File
+				RelativePath="streams.h" />
+			<File
+				RelativePath="strmctrl.h" />
+			<File
+				RelativePath="sysclock.h" />
+			<File
+				RelativePath="transfrm.h" />
+			<File
+				RelativePath="transip.h" />
+			<File
+				RelativePath="videoctl.h" />
+			<File
+				RelativePath="vtrans.h" />
+			<File
+				RelativePath="winctrl.h" />
+			<File
+				RelativePath="winutil.h" />
+			<File
+				RelativePath="wxdebug.h" />
+			<File
+				RelativePath="wxlist.h" />
+			<File
+				RelativePath="wxutil.h" />
+		</Filter>
+	</Files>
+	<Globals>
+	</Globals>
+</VisualStudioProject>

@@ -7,14 +7,12 @@
 #include "vcapvmrrender.h"
 #include "vcapvideoencoder.h"
 #include "vcapfilter.h"
-#include "vcapnetfilter.h"
 
 VCapLiveCapture::VCapLiveCapture()
 {
 	m_pEngine = VCapEngineFactory::getInstance();	
 	m_pCamera = NULL;
 	m_pEncoder = VCapVideoEncoderFactory::findFilter(L"x264");
-	m_pNetFilter = NULL;
 	m_pVMRRender = new VCapVMRRender();
 
 	m_arrCameras = VCapCameraFactory::enumCameras();
@@ -35,7 +33,6 @@ int		VCapLiveCapture::startCapture(int hWnd)
 	HRESULT hr = S_OK;
 
 	m_pVMRRender->setHWnd((HWND)hWnd);
-	m_pNetFilter = new VCapNetFilter();
 	
 	if( !m_pCamera )
 		return VCAP_ERROR_NO_CAMERA;
@@ -44,19 +41,19 @@ int		VCapLiveCapture::startCapture(int hWnd)
 
 	m_pEngine->getGraphBuilder()->AddFilter( m_pCamera->filter()->filter(), L"Camera");
 	m_pEngine->getGraphBuilder()->AddFilter( m_pEncoder->filter()->filter(), L"X264 Encoder");	
-	m_pEngine->getGraphBuilder()->AddFilter( m_pNetFilter->filter()->filter(), L"Net Writer");
+	//m_pEngine->getGraphBuilder()->AddFilter( m_pNetFilter->filter()->filter(), L"Net Writer");
 	m_pEngine->getGraphBuilder()->AddFilter( m_pVMRRender->filter()->filter(), L"VMR9 Render");
 	hr = m_pEngine->getCaptureBuilder()->RenderStream(&PIN_CATEGORY_CAPTURE, 
 		&MEDIATYPE_Video, 
 		m_pCamera->filter()->filter(), 
 		m_pEncoder->filter()->filter(), 						
-		m_pNetFilter->filter()->filter());
+		NULL);
 
 	hr = m_pEngine->getCaptureBuilder()->RenderStream(&PIN_CATEGORY_PREVIEW, 
 		&MEDIATYPE_Video, 
 		m_pCamera->filter()->filter(), 
 		NULL,
-		m_pVMRRender->filter()->filter()  );
+		m_pVMRRender->filter()->filter() );
 
 	m_pEngine->getMediaControl()->Run();
 

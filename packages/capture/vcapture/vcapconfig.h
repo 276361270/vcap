@@ -10,8 +10,8 @@
 #include <vector>
 #include <dshow.h>
 #include <initguid.h>
-#include "capture/idsrfilter.h"
-#include "capture/idsxfilter.h"
+#include "capture/ispxfilter.h"
+#include "capture/ix264filter.h"
 
 #pragma include_alias( "dxtrans.h", "qedit.h" )
 #define __IDxtCompositor_INTERFACE_DEFINED__
@@ -21,7 +21,5 @@
 #include <qedit.h>
 
 #include "capture/ivcapengine.h"
-
-#include "speex/speex.h"
 
 #endif

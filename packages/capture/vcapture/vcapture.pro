@@ -30,7 +30,6 @@ HEADERS += 	\
         vcapmic.h				\
         vcapmicfactory.h		\
         vcapsamplegrabber.h		\
-        vcapnetfilter.h			\
         vcaplivecapture.h		\
         vcapspxencfilter.h		\
         
@@ -56,7 +55,6 @@ SOURCES += 	\
         vcapmic.cpp				\
         vcapmicfactory.cpp		\
         vcapsamplegrabber.cpp	\
-        vcapnetfilter.cpp		\
         vcaplivecapture.cpp		\
         vcapspxencfilter.cpp	\
             
