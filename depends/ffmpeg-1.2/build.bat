@@ -1,1 +1,0 @@
-./configure --enable-shared --enable-small --disable-static --bindir=../../bin/ --libdir=../../bin/ --incdir=../../bin/include --disable-ffplay --enable-libx264 --enable-gpl --extra-cflags=-le:/github/vcap.git/bin/include --extra-ldflags=e:/github/vcap.git/bin/
