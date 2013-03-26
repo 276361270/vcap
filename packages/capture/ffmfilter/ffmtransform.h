@@ -22,6 +22,7 @@ private:
 	AVPacket			m_packet;
 	AVFrame*			m_pFrame;
 	int					m_nFrameSize;
+	int					m_nSamples;
 };
 
 #endif

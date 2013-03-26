@@ -22,6 +22,8 @@ VCapAudioCapture::~VCapAudioCapture()
 {
 	if( m_pEngine )
 		delete m_pEngine;
+	if( m_pFfmEncoder ) 
+		delete m_pFfmEncoder;
 }
 
 void	VCapAudioCapture::setFileName(const wchar_t* filename)

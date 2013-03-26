@@ -1,5 +1,5 @@
-#ifndef _NET_MODULE_CONNECTION_MANAGER_H_
-#define _NET_MODULE_CONNECTION_MANAGER_H_
+#ifndef _CONNECTION_MANAGER_H_
+#define _CONNECTION_MANAGER_H_
 #include "conn.h"
 #include "mutex.h"
 #include <map>

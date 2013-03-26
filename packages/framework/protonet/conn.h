@@ -1,5 +1,5 @@
-#ifndef _NET_MODULE_CONNECTION_H_
-#define _NET_MODULE_CONNECTION_H_
+#ifndef _CONNECTION_H_
+#define _CONNECTION_H_
 #include "protonet.h"
 #include "blockbuf.h"
 #include "ilinklayer.h"

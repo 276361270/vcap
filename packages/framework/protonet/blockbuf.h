@@ -2,8 +2,8 @@
 #define _BLOCK_BUFFER_H_
 
 #include "netlog.h"
-#include <stdlib.h> //linux need it to identify free function!!!
-#include <string.h> //memcpy, memmov
+#include <stdlib.h>
+#include <string.h>
 #include <iostream>
 
 #ifndef _WIN32

@@ -8,7 +8,9 @@ FfmTransform::FfmTransform()
 	m_pCodec = NULL;
 	m_pStream = NULL;
 	m_pFrame = NULL;
+	m_nSamples = 44100*20/1000;
 	::av_register_all();
+	::avformat_network_init();
 }
 
 FfmTransform::~FfmTransform()
@@ -28,7 +30,7 @@ void	FfmTransform::open()
 
 	m_pCodecContext->strict_std_compliance = FF_COMPLIANCE_EXPERIMENTAL;
 	m_pCodecContext->sample_fmt = AV_SAMPLE_FMT_S16;
-	m_pCodecContext->bit_rate = 128000;
+	m_pCodecContext->bit_rate = 64000;
 	m_pCodecContext->sample_rate = 44100;
 	m_pCodecContext->channels = 2;
 	m_pCodecContext->gop_size = 50;
@@ -39,33 +41,40 @@ void	FfmTransform::open()
 		return;
 	}
 
-	m_nFrameSize = m_pCodecContext->frame_size;
-
+	m_nFrameSize = m_pCodecContext->frame_size*4;
 	ret = ::avio_open(&m_pFormatContext->pb, filename, AVIO_FLAG_WRITE);
 	if( ret != 0 ) {
 		FFMLOG("FfmTransform::open, avio_open failed ret=", ret);
 		return;
 	}
 	::avformat_write_header(m_pFormatContext, NULL);
+
 	m_pFrame = avcodec_alloc_frame();
-	m_pFrame->nb_samples = m_nFrameSize/4;
 }
 
 int		FfmTransform::onData(int media_type, char* src, int inlen, char* dest, int outlen)
 {
 	int got_packet = 0;
 	int ret = 0;
-	int packets = inlen/m_nFrameSize;
 	int num = 0;
 	
 	avcodec_get_frame_defaults(m_pFrame);
+	m_pFrame->nb_samples = m_nSamples;
+
 	av_init_packet(&m_packet);
 
 	ret = ::avcodec_fill_audio_frame(m_pFrame, 2, AV_SAMPLE_FMT_S16, (uint8_t*)src, inlen, 1);
+	if( ret != 0 ) {
+		FFMLOG("FfmTransform.onData, avcodec_encode_audio2 failed with ret=", ret);
+		return 0;
+	}
 	ret = ::avcodec_encode_audio2(m_pCodecContext, &m_packet, m_pFrame, &got_packet);
 	if( ret == 0 && got_packet )
 	{
-		::av_write_frame(m_pFormatContext, &m_packet);
+		ret = ::av_write_frame(m_pFormatContext, &m_packet);
+		if( ret < 0 ) {
+			FFMLOG("FfmTransform.onData, av_write_frame failed with ret=", ret);
+		}
 		num++;
 	} else {
 	//	FFMLOG("FfmTransform.onData, avcodec_encode_audio2 failed with ret=", ret);
