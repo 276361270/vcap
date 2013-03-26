@@ -12,7 +12,7 @@ VCapVideoCapture::VCapVideoCapture()
 {
 	m_pEngine = VCapEngineFactory::getInstance();	
 	m_pCamera = NULL;
-	m_pEncoder = new FfmEncoder();
+	m_pEncoder = new FfmEncoder(FFM_MEDIA_VIDEO);
 	m_pFileFilter = NULL;
 	m_pVMRRender = new VCapVMRRender();
 
@@ -46,7 +46,9 @@ int		VCapVideoCapture::startCapture(int hWnd)
 	HRESULT hr = S_OK;
 
 	m_pVMRRender->setHWnd((HWND)hWnd);
-	m_pFileFilter = new VCapFileFilter(m_pEngine, L"d:\\video.avi");
+	if( m_wstrFileName.size() != 0 ) {
+		m_pFileFilter = new VCapFileFilter(m_pEngine, m_wstrFileName.c_str());
+	}
 	
 	if( !m_pCamera )
 		return VCAP_ERROR_NO_CAMERA;
@@ -55,30 +57,18 @@ int		VCapVideoCapture::startCapture(int hWnd)
 
 	m_pEngine->getGraphBuilder()->AddFilter( m_pCamera->filter()->filter(), L"Camera");
 	m_pEngine->getGraphBuilder()->AddFilter( m_pEncoder->filter()->filter(), L"Ffm Encoder");
-	m_pEngine->getGraphBuilder()->AddFilter( m_pFileFilter->filter()->filter(), L"File Writer");
-	//m_pEngine->getGraphBuilder()->AddFilter( m_pNetFilter->filter()->filter(), L"Net Writer");
+	if( m_pFileFilter ) {
+		m_pEngine->getGraphBuilder()->AddFilter( m_pFileFilter->filter()->filter(), L"File Writer");
+	}
 	m_pEngine->getGraphBuilder()->AddFilter( m_pVMRRender->filter()->filter(), L"VMR9 Render");
 	
-	/*
-	hr = m_pEngine->getCaptureBuilder()->RenderStream(&PIN_CATEGORY_CAPTURE, 
-		&MEDIATYPE_Video, 
-		m_pCamera->filter()->filter(), 
-		m_pEncoder->filter()->filter(), 						
-		m_pFileFilter->filter()->filter());
-	*/
-	hr = m_pEngine->getCaptureBuilder()->RenderStream(&PIN_CATEGORY_CAPTURE, 
-		&MEDIATYPE_Video, 
-		m_pCamera->filter()->filter(), 
-		m_pEncoder->filter()->filter(), 						
-		NULL);
-
 	hr = m_pEngine->getCaptureBuilder()->RenderStream(&PIN_CATEGORY_PREVIEW, 
 		&MEDIATYPE_Video, 
 		m_pCamera->filter()->filter(), 
-		NULL,
+		m_pEncoder->filter()->filter(),
 		m_pVMRRender->filter()->filter()  );
 
-	m_pEngine->getMediaControl()->Run();
+	m_pEngine->start();
 
 	return VCAP_ERROR_OK;
 }
@@ -88,7 +78,7 @@ int		VCapVideoCapture::stopCapture()
 	if( !m_pEngine || !m_pEngine->getMediaControl() )
 		return VCAP_ERROR_UNKNOWN;
 
-	m_pEngine->getMediaControl()->Stop();
+	m_pEngine->stop();
 	return VCAP_ERROR_OK;
 }
 

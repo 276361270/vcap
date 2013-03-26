@@ -14,7 +14,7 @@ public:
 	~VCapFilter();
 
 public:
-	void		enumPings();
+	void		enumPins();
 	VCapPin*	getOutputPin();
 
 public:

@@ -9,11 +9,15 @@ HEADERS += ffmconfig.h
 HEADERS += ffmfilter.h
 HEADERS += ffmtransform.h
 HEADERS += ffmlog.h
+HEADERS += ffmaachandler.h
+HEADERS += ffmh264handler.h
 
 
 SOURCES += dllmain.cpp
 SOURCES += ffmfilter.cpp
 SOURCES += ffmtransform.cpp
+SOURCES += ffmaachandler.cpp
+SOURCES += ffmh264handler.cpp
 
 DEF_FILE = ffmfilter.def
 

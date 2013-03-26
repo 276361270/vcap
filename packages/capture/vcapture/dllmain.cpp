@@ -1,6 +1,3 @@
-// 定义 DLL 应用程序的入口点。
-//
-
 #include "vcapaudiocapture.h"
 #include "vcapvideocapture.h"
 

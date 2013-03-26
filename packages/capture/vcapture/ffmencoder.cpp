@@ -1,9 +1,11 @@
 #include "ffmencoder.h"
 #include "vcapfilter.h"
 
-FfmEncoder::FfmEncoder()
+FfmEncoder::FfmEncoder(int media_type)
+: m_nMediaType(media_type)
 {
 	m_pFilter = NULL;
+	m_pFfmFilter = NULL;
 	init();
 }
 
@@ -20,4 +22,6 @@ void	FfmEncoder::init()
 	if( FAILED(hr) )
 		return;
 	m_pFilter = new VCapFilter(filter);
+	filter->QueryInterface(IID_FFMFILTER, (void**)&m_pFfmFilter);
+	m_pFfmFilter->setMediaType(m_nMediaType);
 }

@@ -7,6 +7,7 @@ VCapCamera::VCapCamera(VCapFilter* filter)
 , m_pCameraControl(NULL)
 , m_pStreamConfig(NULL)
 {
+	HRESULT hr = S_OK;
 	m_pFilter->filter()->QueryInterface(IID_IAMCameraControl, (void**)&m_pCameraControl);
 	memset(&m_propExpose, 0, sizeof(m_propExpose));
 	memset(&m_propZoon, 0, sizeof(m_propZoon));
@@ -24,6 +25,10 @@ VCapCamera::VCapCamera(VCapFilter* filter)
 	m_guidSubType = media->subtype;
 	m_guidFormat = media->formattype;
 	memcpy(&m_videoInfoHeader, media->pbFormat, media->cbFormat);
+
+	//set the video properties:
+	m_videoInfoHeader.AvgTimePerFrame = 100*10*1000;
+	//hr = m_pStreamConfig->SetFormat(media);
 }
 
 VCapCamera::~VCapCamera()

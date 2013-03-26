@@ -1,198 +1,339 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="vcapture"
 	ProjectGUID="{6CABA41C-D8A5-341B-AF59-99966B43B946}"
-	Keyword="Qt4VSv1.0">
+	Keyword="Qt4VSv1.0"
+	TargetFrameworkVersion="0"
+	>
 	<Platforms>
 		<Platform
-			Name="Win32" />
+			Name="Win32"
+		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			OutputDirectory="..\..\..\bin\debug\"
+			IntermediateDirectory="debug\"
+			ConfigurationType="2"
+			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
-			ConfigurationType="2"
-			IntermediateDirectory="debug\"
-			UseOfMfc="0">
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\..\..\bin\include&quot;,&quot;..\..\..\depends\ffmpeg\include&quot;,&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\libspeex\include&quot;,c:\Qt\4.8.4\mkspecs\default"
-				AdditionalOptions="-Zm200 /MP -w34189"
-				AssemblerListingLocation="debug\"
-				BufferSecurityCheck="true"
-				DebugInformationFormat="3"
-				ExceptionHandling="0"
-				GeneratePreprocessedFile="0"
-				ObjectFile="debug\"
-				Optimization ="4"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,DUI_ACCESSIBLE,UNICODE,_CRT_NON_CONFORMING_SWPRINTFS,_CRT_SECURE_NO_WARNINGS"
-				ProgramDataBaseFileName="$(IntDir)"
-				RuntimeLibrary="3"
-				RuntimeTypeInfo="true"
-				SuppressStartupBanner="true"
-				TreatWChar_tAsBuiltInType="false"
-				WarningLevel="3" />
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool" />
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(TargetDir),$(TargetDir)\..\,..\..\..\depends\ffmpeg\lib"
-				AdditionalOptions="/debugtype:cv,fixup"
-				GenerateDebugInformation="true"
-				IgnoreImportLibrary="true"
-				LinkTimeCodeGeneration="0"
-				OutputFile="$(OutDir)\vcapture.dll"
-				ProgramDatabaseFile=""
-				SubSystem="0"
-				SuppressStartupBanner="true"
-				TargetMachine="1" />
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
+				WarningLevel="0"
 				DefaultCharType="0"
 				EnableErrorChecks="1"
-				WarningLevel="0" />
+			/>
 			<Tool
-				Name="VCPostBuildEventTool" />
+				Name="VCCLCompilerTool"
+				AdditionalOptions="-Zm200 /MP -w34189"
+				Optimization="4"
+				AdditionalIncludeDirectories="&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\..\..\bin\include&quot;,&quot;..\..\..\depends\ffmpeg\include&quot;,&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\libspeex\include&quot;,c:\Qt\4.8.4\mkspecs\default"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,DUI_ACCESSIBLE,UNICODE,_CRT_NON_CONFORMING_SWPRINTFS,_CRT_SECURE_NO_WARNINGS"
+				GeneratePreprocessedFile="0"
+				ExceptionHandling="0"
+				RuntimeLibrary="3"
+				BufferSecurityCheck="true"
+				TreatWChar_tAsBuiltInType="false"
+				RuntimeTypeInfo="true"
+				AssemblerListingLocation="debug\"
+				ObjectFile="debug\"
+				ProgramDataBaseFileName="$(IntDir)"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				DebugInformationFormat="3"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool" />
-			<Tool
-				Name="VCPreLinkEventTool" />
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,DUI_ACCESSIBLE,UNICODE,_CRT_NON_CONFORMING_SWPRINTFS,_CRT_SECURE_NO_WARNINGS,_DEBUG" />
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,DUI_ACCESSIBLE,UNICODE,_CRT_NON_CONFORMING_SWPRINTFS,_CRT_SECURE_NO_WARNINGS,_DEBUG"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
+				AdditionalOptions="/debugtype:cv,fixup"
+				OutputFile="$(OutDir)\vcapture.dll"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="$(TargetDir),$(TargetDir)\..\,..\..\..\depends\ffmpeg\lib"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile=""
+				SubSystem="0"
+				LinkTimeCodeGeneration="0"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
 			OutputDirectory="..\..\..\bin\release\"
+			IntermediateDirectory="release\"
+			ConfigurationType="2"
+			UseOfMFC="0"
 			ATLMinimizesCRunTimeLibraryUsage="false"
 			CharacterSet="1"
-			ConfigurationType="2"
-			IntermediateDirectory="release\"
-			UseOfMfc="0">
+			>
 			<Tool
-				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\..\..\bin\include&quot;,&quot;..\..\..\depends\ffmpeg\include&quot;,&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\libspeex\include&quot;,c:\Qt\4.8.4\mkspecs\default"
-				AdditionalOptions="-Zm200 /MP -w34189"
-				AssemblerListingLocation="release\"
-				BufferSecurityCheck="true"
-				DebugInformationFormat="3"
-				ExceptionHandling="0"
-				GeneratePreprocessedFile="0"
-				ObjectFile="release\"
-				Optimization ="2"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,DUI_ACCESSIBLE,UNICODE,_CRT_NON_CONFORMING_SWPRINTFS,_CRT_SECURE_NO_WARNINGS,NDEBUG"
-				ProgramDataBaseFileName="$(IntDir)"
-				RuntimeLibrary="2"
-				RuntimeTypeInfo="true"
-				SuppressStartupBanner="true"
-				TreatWChar_tAsBuiltInType="false"
-				WarningLevel="3" />
+				Name="VCPreBuildEventTool"
+			/>
 			<Tool
-				Name="VCCustomBuildTool" />
+				Name="VCCustomBuildTool"
+			/>
 			<Tool
-				Name="VCLinkerTool"
-				AdditionalLibraryDirectories="$(TargetDir),$(TargetDir)\..\,..\..\..\depends\ffmpeg\lib"
-				EnableCOMDATFolding="2"
-				GenerateDebugInformation="true"
-				IgnoreImportLibrary="true"
-				LinkIncremental="1"
-				LinkTimeCodeGeneration="0"
-				OptimizeReferences="2"
-				OutputFile="$(OutDir)\vcapture.dll"
-				ProgramDatabaseFile=""
-				SubSystem="0"
-				SuppressStartupBanner="true"
-				TargetMachine="1" />
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
 			<Tool
 				Name="VCMIDLTool"
+				WarningLevel="0"
 				DefaultCharType="0"
 				EnableErrorChecks="1"
-				WarningLevel="0" />
+			/>
 			<Tool
-				Name="VCPostBuildEventTool" />
+				Name="VCCLCompilerTool"
+				AdditionalOptions="-Zm200 /MP -w34189"
+				Optimization="2"
+				AdditionalIncludeDirectories="&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\..\..\bin\include&quot;,&quot;..\..\..\depends\ffmpeg\include&quot;,&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\libspeex\include&quot;,c:\Qt\4.8.4\mkspecs\default"
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,DUI_ACCESSIBLE,UNICODE,_CRT_NON_CONFORMING_SWPRINTFS,_CRT_SECURE_NO_WARNINGS,NDEBUG"
+				GeneratePreprocessedFile="0"
+				ExceptionHandling="0"
+				RuntimeLibrary="2"
+				BufferSecurityCheck="true"
+				TreatWChar_tAsBuiltInType="false"
+				RuntimeTypeInfo="true"
+				AssemblerListingLocation="release\"
+				ObjectFile="release\"
+				ProgramDataBaseFileName="$(IntDir)"
+				WarningLevel="3"
+				SuppressStartupBanner="true"
+				DebugInformationFormat="3"
+			/>
 			<Tool
-				Name="VCPreBuildEventTool" />
-			<Tool
-				Name="VCPreLinkEventTool" />
+				Name="VCManagedResourceCompilerTool"
+			/>
 			<Tool
 				Name="VCResourceCompilerTool"
-				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,DUI_ACCESSIBLE,UNICODE,_CRT_NON_CONFORMING_SWPRINTFS,_CRT_SECURE_NO_WARNINGS" />
+				PreprocessorDefinitions="_WINDOWS,UNICODE,WIN32,QT_LARGEFILE_SUPPORT,DUI_ACCESSIBLE,UNICODE,_CRT_NON_CONFORMING_SWPRINTFS,_CRT_SECURE_NO_WARNINGS"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				IgnoreImportLibrary="true"
+				OutputFile="$(OutDir)\vcapture.dll"
+				LinkIncremental="1"
+				SuppressStartupBanner="true"
+				AdditionalLibraryDirectories="$(TargetDir),$(TargetDir)\..\,..\..\..\depends\ffmpeg\lib"
+				GenerateDebugInformation="true"
+				ProgramDatabaseFile=""
+				SubSystem="0"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				LinkTimeCodeGeneration="0"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+			/>
+			<Tool
+				Name="VCManifestTool"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+			/>
 		</Configuration>
 	</Configurations>
+	<References>
+	</References>
 	<Files>
 		<Filter
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
-			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
+			>
 			<File
-				RelativePath="dllmain.cpp" />
+				RelativePath="dllmain.cpp"
+				>
+			</File>
 			<File
-				RelativePath="ffmencoder.cpp" />
+				RelativePath="ffmencoder.cpp"
+				>
+			</File>
 			<File
-				RelativePath="vcapaudiocapture.cpp" />
+				RelativePath="vcapaudiocapture.cpp"
+				>
+			</File>
 			<File
-				RelativePath="vcapcamera.cpp" />
+				RelativePath="vcapcamera.cpp"
+				>
+			</File>
 			<File
-				RelativePath="vcapcamerafactory.cpp" />
+				RelativePath="vcapcamerafactory.cpp"
+				>
+			</File>
 			<File
-				RelativePath="vcapengine.cpp" />
+				RelativePath="vcapengine.cpp"
+				>
+			</File>
 			<File
-				RelativePath="vcapenginefactory.cpp" />
+				RelativePath="vcapenginefactory.cpp"
+				>
+			</File>
 			<File
-				RelativePath="vcapfilefilter.cpp" />
+				RelativePath="vcapfilefilter.cpp"
+				>
+			</File>
 			<File
-				RelativePath="vcapfilter.cpp" />
+				RelativePath="vcapfilter.cpp"
+				>
+			</File>
 			<File
-				RelativePath="vcapmic.cpp" />
+				RelativePath="vcapmic.cpp"
+				>
+			</File>
 			<File
-				RelativePath="vcapmicfactory.cpp" />
+				RelativePath="vcapmicfactory.cpp"
+				>
+			</File>
 			<File
-				RelativePath="vcappin.cpp" />
+				RelativePath="vcappin.cpp"
+				>
+			</File>
 			<File
-				RelativePath="vcapsamplegrabber.cpp" />
+				RelativePath="vcapsamplegrabber.cpp"
+				>
+			</File>
 			<File
-				RelativePath="vcapvideocapture.cpp" />
+				RelativePath="vcapvideocapture.cpp"
+				>
+			</File>
 			<File
-				RelativePath="vcapvmrrender.cpp" />
+				RelativePath="vcapvmrrender.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
-			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
+			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
+			>
 			<File
-				RelativePath="ffmencoder.h" />
+				RelativePath="ffmencoder.h"
+				>
+			</File>
 			<File
-				RelativePath="vcapaudiocapture.h" />
+				RelativePath="vcapaudiocapture.h"
+				>
+			</File>
 			<File
-				RelativePath="vcapcamera.h" />
+				RelativePath="vcapcamera.h"
+				>
+			</File>
 			<File
-				RelativePath="vcapcamerafactory.h" />
+				RelativePath="vcapcamerafactory.h"
+				>
+			</File>
 			<File
-				RelativePath="vcapconfig.h" />
+				RelativePath="vcapconfig.h"
+				>
+			</File>
 			<File
-				RelativePath="vcapengine.h" />
+				RelativePath="vcapengine.h"
+				>
+			</File>
 			<File
-				RelativePath="vcapenginefactory.h" />
+				RelativePath="vcapenginefactory.h"
+				>
+			</File>
 			<File
-				RelativePath="vcapfilefilter.h" />
+				RelativePath="vcapfilefilter.h"
+				>
+			</File>
 			<File
-				RelativePath="vcapfilter.h" />
+				RelativePath="vcapfilter.h"
+				>
+			</File>
 			<File
-				RelativePath="vcapmic.h" />
+				RelativePath="vcapmic.h"
+				>
+			</File>
 			<File
-				RelativePath="vcapmicfactory.h" />
+				RelativePath="vcapmicfactory.h"
+				>
+			</File>
 			<File
-				RelativePath="vcappin.h" />
+				RelativePath="vcappin.h"
+				>
+			</File>
 			<File
-				RelativePath="vcapsamplegrabber.h" />
+				RelativePath="vcapsamplegrabber.h"
+				>
+			</File>
 			<File
-				RelativePath="vcapvideocapture.h" />
+				RelativePath="vcapvideocapture.h"
+				>
+			</File>
 			<File
-				RelativePath="vcapvmrrender.h" />
+				RelativePath="vcapvmrrender.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

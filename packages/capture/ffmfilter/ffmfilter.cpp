@@ -7,7 +7,7 @@ FfmFilter::FfmFilter(LPUNKNOWN punk, HRESULT *phr)
 {
 	m_pTranform = new FfmTransform();
 	m_pTranform->open();
-
+	m_nMediaType = 0;
 	LOG_INIT();
 }
 
@@ -33,7 +33,7 @@ STDMETHODIMP FfmFilter::NonDelegatingQueryInterface(REFIID riid, void **ppv)
 {
     CheckPointer(ppv,E_POINTER);
     if (riid == IID_FFMFILTER) {
-        *ppv = this;
+        *ppv = static_cast<IFfmFilter*>(this);
 		return S_OK;
 
     } else {
@@ -54,22 +54,9 @@ HRESULT		FfmFilter::Transform(IMediaSample *pSource, IMediaSample *pDest)
 	long lDestSize = pDest->GetActualDataLength();
 
     //CopyMemory( (PVOID) pDestBuffer,(PVOID) pSourceBuffer,lSourceSize);
-	AM_MEDIA_TYPE* mt;
-	pSource->GetMediaType(&mt);
 	if( m_pTranform ) 
 	{
-		if( mt == NULL ) 
-		{
-			m_pTranform->onData(1, (char*)pSourceBuffer, lSourceSize, (char*)pDestBuffer, lDestSize);
-		}
-		else if( mt->majortype == MEDIATYPE_Video ) 
-		{
-			m_pTranform->onData(0, (char*)pSourceBuffer, lSourceSize, (char*)pDestBuffer, lDestSize);
-		} 
-		else if( mt->majortype == MEDIATYPE_Audio ) 
-		{
-			m_pTranform->onData(1, (char*)pSourceBuffer, lSourceSize, (char*)pDestBuffer, lDestSize);
-		}
+		m_pTranform->onData(m_nMediaType, (char*)pSourceBuffer, lSourceSize, (char*)pDestBuffer, lDestSize);
 	}
 
     // Copy the sample times

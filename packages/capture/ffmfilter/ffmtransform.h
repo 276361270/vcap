@@ -3,6 +3,8 @@
 
 #include "ffmfilter.h"
 
+class FfmAacHandler;
+class FfmH264Handler;
 class FfmTransform
 {
 public:
@@ -15,14 +17,8 @@ public:
 	void	close();
 
 private:
-	AVFormatContext*	m_pFormatContext;
-	AVCodecContext*		m_pCodecContext;
-	AVCodec*			m_pCodec;
-	AVStream*			m_pStream;
-	AVPacket			m_packet;
-	AVFrame*			m_pFrame;
-	int					m_nFrameSize;
-	int					m_nSamples;
+	FfmAacHandler*	m_pAacHandler;
+	FfmH264Handler* m_pH264Handler;
 };
 
 #endif

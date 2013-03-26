@@ -4,7 +4,7 @@
 #include "ffmconfig.h"
 
 class FfmTransform;
-class FfmFilter : public CTransformFilter
+class FfmFilter : public CTransformFilter, public IFfmFilter
 {
 public:
 	FfmFilter(LPUNKNOWN punk, HRESULT *phr);
@@ -14,6 +14,7 @@ public:
 public:    
     static CUnknown * WINAPI CreateInstance(LPUNKNOWN punk, HRESULT *phr);
 
+public:
     STDMETHODIMP NonDelegatingQueryInterface(REFIID riid, void ** ppv);
 
     HRESULT Transform(IMediaSample *pIn, IMediaSample *pOut);
@@ -23,11 +24,15 @@ public:
                              ALLOCATOR_PROPERTIES *pProperties);
     HRESULT GetMediaType(int iPosition, CMediaType *pMediaType);
 
+public:
+	virtual void	setMediaType(int type) {m_nMediaType = type;}
+
 private:
     CCritSec    m_EZrgb24Lock;
     CRefTime    m_effectStartTime;
     CRefTime    m_effectTime;
 	FfmTransform*	m_pTranform;
+	int			m_nMediaType;
 };
 
 #endif

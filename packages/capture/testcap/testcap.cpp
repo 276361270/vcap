@@ -9,6 +9,7 @@
 
 // Global Variables:
 HINSTANCE hInst;								// current instance
+HWND hWnd;
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
 TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 
@@ -20,6 +21,7 @@ INT_PTR CALLBACK	About(HWND, UINT, WPARAM, LPARAM);
 
 //audio capture relative:
 IVCapAudioCapture*	pAudioCapture = NULL;
+IVCapVideoCapture*	pVideoCapture = NULL;
 
 int APIENTRY _tWinMain(HINSTANCE hInstance,
                      HINSTANCE hPrevInstance,
@@ -45,8 +47,11 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	}
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_TESTCAP));
 
-	pAudioCapture = loadAudioCapture();
-	pAudioCapture->startCapture();
+	//pAudioCapture = loadAudioCapture();
+	//pAudioCapture->startCapture();
+
+	pVideoCapture = loadVideoCapture();
+	pVideoCapture->startCapture((int)hWnd);
 	// Main message loop:
 	while (GetMessage(&msg, NULL, 0, 0))
 	{
@@ -108,8 +113,6 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   HWND hWnd;
-
    hInst = hInstance; // Store instance handle in our global variable
 
    hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
@@ -154,7 +157,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			//DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
 			break;
 		case IDM_EXIT:
-			pAudioCapture->stopCapture();
+			//pAudioCapture->stopCapture();
+			pVideoCapture->stopCapture();
 			DestroyWindow(hWnd);
 			break;
 		default:
@@ -163,7 +167,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 		break;
 	case WM_PAINT:
 		hdc = BeginPaint(hWnd, &ps);
-		// TODO: Add any drawing code here...
+		//// TODO: Add any drawing code here...
+		pVideoCapture->paint();
 		EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:

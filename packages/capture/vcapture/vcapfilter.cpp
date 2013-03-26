@@ -5,7 +5,7 @@ VCapFilter::VCapFilter(IBaseFilter* filter)
 : m_pBaseFilter(filter)
 {
 	//enum pins:
-	enumPings();
+	enumPins();
 }
 
 VCapFilter::VCapFilter(IMoniker* moniker)
@@ -29,7 +29,7 @@ VCapFilter::VCapFilter(IMoniker* moniker)
 	moniker->BindToObject(NULL, NULL, IID_IBaseFilter,(void**)&m_pBaseFilter);
 
 	//enum pins:
-	enumPings();
+	enumPins();
 }
 
 VCapFilter::~VCapFilter()
@@ -37,7 +37,7 @@ VCapFilter::~VCapFilter()
 
 }
 
-void	VCapFilter::enumPings()
+void	VCapFilter::enumPins()
 {
 	if( !m_pBaseFilter )
 		return;

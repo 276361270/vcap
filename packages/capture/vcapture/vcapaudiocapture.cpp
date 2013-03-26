@@ -10,7 +10,7 @@
 VCapAudioCapture::VCapAudioCapture()
 {	
 	m_pEngine = VCapEngineFactory::getInstance();	
-	m_pFfmEncoder = new FfmEncoder();
+	m_pFfmEncoder = new FfmEncoder(FFM_MEDIA_AUDIO);
 
 	m_pFileFilter = NULL;
 	m_arrMics = VCapMicFactory::enumMics();
@@ -40,7 +40,7 @@ int		VCapAudioCapture::startCapture()
 	HRESULT hr = S_OK;
 
 	if( m_wstrFileName.size() > 0 ) {
-		m_pFileFilter = new VCapFileFilter(m_pEngine, L"d:\\video.avi");	
+		m_pFileFilter = new VCapFileFilter(m_pEngine, m_wstrFileName.c_str());	
 	}
 	if( !m_pMic )
 		return VCAP_ERROR_NO_CAMERA;
@@ -65,13 +65,13 @@ int		VCapAudioCapture::startCapture()
 			NULL);
 	}
 
-	m_pEngine->getMediaControl()->Run();
+	m_pEngine->start();
 
 	return VCAP_ERROR_OK;
 }
 
 int		VCapAudioCapture::stopCapture()
 {
-	m_pEngine->getMediaControl()->Stop();
+	m_pEngine->stop();
 	return VCAP_ERROR_OK;
 }

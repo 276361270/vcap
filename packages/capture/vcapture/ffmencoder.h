@@ -7,15 +7,19 @@ class VCapFilter;
 class FfmEncoder
 {
 public:
-	FfmEncoder();
+	FfmEncoder(int media_type);
 	~FfmEncoder();
 
-public:
-	void		init();
+public:	
 	VCapFilter*	filter() { return m_pFilter; }
 
 private:
+	void		init();
+
+private:
 	VCapFilter*		m_pFilter;
+	IFfmFilter*		m_pFfmFilter;
+	int				m_nMediaType;
 };
 
 #endif

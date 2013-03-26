@@ -5,6 +5,7 @@ VCapVMRRender::VCapVMRRender()
 {
 	m_bWindowless = true;
 	m_hWnd = NULL;
+	m_pVMRFilter = NULL;
 	m_pVMRControl = NULL;	
 	m_pVMRConfig = NULL;
 
@@ -28,10 +29,12 @@ void	VCapVMRRender::init()
 	m_pVMRFilter = new VCapFilter(pVmr);
 	
 	hr = m_pVMRFilter->filter()->QueryInterface(IID_IVMRFilterConfig, (void**)&m_pVMRConfig); 
-    if (SUCCEEDED(hr)) 
-    { 
-        m_pVMRConfig->SetRenderingMode(VMRMode_Windowless);                 
-    } 
+	if (SUCCEEDED(hr)) 
+	{ 
+		hr = m_pVMRConfig->SetRenderingMode(VMRMode_Windowless);
+		m_pVMRConfig->Release();
+		m_pVMRConfig = NULL;
+	} 
 	m_pVMRFilter->filter()->QueryInterface(IID_IVMRWindowlessControl, (void**)&m_pVMRControl); 
 }
 
@@ -43,14 +46,22 @@ void	VCapVMRRender::setWindowless(bool wless)
 void	VCapVMRRender::setHWnd(HWND hWnd)
 {
 	HRESULT		hr = S_OK;
+	RECT src_rect, dest_rect;
+	LONG width, height, arwidth, arheight;
+
 	m_hWnd = hWnd;
 	if( !m_pVMRControl ) 
 		return;
+	m_pVMRControl->GetNativeVideoSize(&width, &height, &arwidth, &arheight);
 	hr = m_pVMRControl->SetVideoClippingWindow(m_hWnd);	
 
-	RECT rect;
-	::GetClientRect(m_hWnd, &rect);
-	m_pVMRControl->SetVideoPosition(NULL, &rect);
+	
+	dest_rect.left = 0;
+	dest_rect.top = 0;
+	dest_rect.right = width;
+	dest_rect.bottom = height;
+	::GetClientRect(m_hWnd, &dest_rect);
+	m_pVMRControl->SetVideoPosition(NULL, &dest_rect);
 }
 
 
