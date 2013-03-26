@@ -147,8 +147,6 @@
 			<File
 				RelativePath="vcapfilter.cpp" />
 			<File
-				RelativePath="vcaplivecapture.cpp" />
-			<File
 				RelativePath="vcapmic.cpp" />
 			<File
 				RelativePath="vcapmicfactory.cpp" />
@@ -183,8 +181,6 @@
 				RelativePath="vcapfilefilter.h" />
 			<File
 				RelativePath="vcapfilter.h" />
-			<File
-				RelativePath="vcaplivecapture.h" />
 			<File
 				RelativePath="vcapmic.h" />
 			<File

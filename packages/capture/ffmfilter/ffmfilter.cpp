@@ -1,11 +1,14 @@
 #include "ffmfilter.h"
 #include "ffmtransform.h"
+#include "ffmlog.h"
 
 FfmFilter::FfmFilter(LPUNKNOWN punk, HRESULT *phr) 
 : CTransformFilter(STR_FFMFILTER, punk, CLSID_FFMFILTER) 
 {
 	m_pTranform = new FfmTransform();
 	m_pTranform->open();
+
+	LOG_INIT();
 }
 
 FfmFilter::~FfmFilter()

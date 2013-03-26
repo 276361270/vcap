@@ -135,8 +135,6 @@
 			<File
 				RelativePath="dllmain.cpp" />
 			<File
-				RelativePath="ffmfilestream.cpp" />
-			<File
 				RelativePath="ffmfilter.cpp" />
 			<File
 				RelativePath="ffmtransform.cpp" />
@@ -148,9 +146,9 @@
 			<File
 				RelativePath="ffmconfig.h" />
 			<File
-				RelativePath="ffmfilestream.h" />
-			<File
 				RelativePath="ffmfilter.h" />
+			<File
+				RelativePath="ffmlog.h" />
 			<File
 				RelativePath="ffmtransform.h" />
 		</Filter>

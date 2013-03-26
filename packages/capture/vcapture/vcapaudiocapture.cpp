@@ -10,7 +10,6 @@
 VCapAudioCapture::VCapAudioCapture()
 {	
 	m_pEngine = VCapEngineFactory::getInstance();	
-	//m_pSpxFilter = new VCapSpxEncFilter();
 	m_pFfmEncoder = new FfmEncoder();
 
 	m_pFileFilter = NULL;
@@ -38,23 +37,31 @@ int		VCapAudioCapture::startCapture()
 {
 	HRESULT hr = S_OK;
 
-	m_pFileFilter = new VCapFileFilter(m_pEngine, L"d:\\video.avi");	
+	if( m_wstrFileName.size() > 0 ) {
+		m_pFileFilter = new VCapFileFilter(m_pEngine, L"d:\\video.avi");	
+	}
 	if( !m_pMic )
 		return VCAP_ERROR_NO_CAMERA;
-	//if( !m_pSpxFilter )
-	//	return VCAP_ERROR_NO_SPEEX_FILTER;
 
-	m_pEngine->getGraphBuilder()->AddFilter( m_pMic->filter()->filter(), L"Micphone");
-	//m_pEngine->getGraphBuilder()->AddFilter( m_pSpxFilter->filter()->filter(), L"Speex Encoder");
+	m_pEngine->getGraphBuilder()->AddFilter( m_pMic->filter()->filter(), L"Microphone");
 	m_pEngine->getGraphBuilder()->AddFilter( m_pFfmEncoder->filter()->filter(), L"Ffm Encoder");
-	m_pEngine->getGraphBuilder()->AddFilter( m_pFileFilter->filter()->filter(), L"File Writer");	
+	if( m_pFileFilter ) {
+		m_pEngine->getGraphBuilder()->AddFilter( m_pFileFilter->filter()->filter(), L"File Writer");	
+	}
 	
-	hr = m_pEngine->getCaptureBuilder()->RenderStream(&PIN_CATEGORY_CAPTURE, 
-		&MEDIATYPE_Audio, 
-		m_pMic->filter()->filter(), 
-		//m_pSpxFilter->filter()->filter(),
-		m_pFfmEncoder->filter()->filter(),
-		m_pFileFilter->filter()->filter());
+	if( m_pFileFilter ) {
+		hr = m_pEngine->getCaptureBuilder()->RenderStream(&PIN_CATEGORY_CAPTURE, 
+			&MEDIATYPE_Audio, 
+			m_pMic->filter()->filter(), 
+			m_pFfmEncoder->filter()->filter(),
+			m_pFileFilter->filter()->filter());
+	} else {
+		hr = m_pEngine->getCaptureBuilder()->RenderStream(&PIN_CATEGORY_CAPTURE, 
+			&MEDIATYPE_Audio, 
+			m_pMic->filter()->filter(), 
+			m_pFfmEncoder->filter()->filter(),
+			NULL);
+	}
 
 	m_pEngine->getMediaControl()->Run();
 

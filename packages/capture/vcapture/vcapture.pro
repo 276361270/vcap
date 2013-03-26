@@ -24,7 +24,6 @@ HEADERS += 	\
         vcapmic.h				\
         vcapmicfactory.h		\
         vcapsamplegrabber.h		\
-        vcaplivecapture.h		\
         ffmencoder.h			\
         
             
@@ -45,7 +44,6 @@ SOURCES += 	\
         vcapmic.cpp				\
         vcapmicfactory.cpp		\
         vcapsamplegrabber.cpp	\
-        vcaplivecapture.cpp		\
         ffmencoder.cpp			\
             
             

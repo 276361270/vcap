@@ -12,6 +12,7 @@ public:
 public:
 	void	open();
 	int		onData(int media_type, char* src, int inlen, char* dest, int outlen);
+	void	close();
 
 private:
 	AVFormatContext*	m_pFormatContext;
@@ -19,6 +20,7 @@ private:
 	AVCodec*			m_pCodec;
 	AVStream*			m_pStream;
 	AVPacket			m_packet;
+	AVFrame*			m_pFrame;
 	int					m_nFrameSize;
 };
 

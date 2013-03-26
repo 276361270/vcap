@@ -28,6 +28,8 @@ private:
 	IAMStreamConfig*m_pConfig;
 	AM_MEDIA_TYPE*	m_pFormat;
 	WAVEFORMATEX*	m_pWaveInfo;
+	IAMBufferNegotiation*	m_pBuffCtl;
+	ALLOCATOR_PROPERTIES	m_bufprops;
 };
 
 #endif

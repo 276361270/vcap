@@ -6,8 +6,6 @@ INCLUDEPATH += .
 SUBDIRS =   		\
 	  baseclasses	\
       vcapture      \
-      x264filter	\
-      speexfilter	\
       ffmfilter		\
       
 	

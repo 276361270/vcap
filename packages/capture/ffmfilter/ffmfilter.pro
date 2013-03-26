@@ -8,13 +8,12 @@ CONFIG -= qt
 HEADERS += ffmconfig.h
 HEADERS += ffmfilter.h
 HEADERS += ffmtransform.h
-HEADERS += ffmfilestream.h
+HEADERS += ffmlog.h
 
 
 SOURCES += dllmain.cpp
 SOURCES += ffmfilter.cpp
 SOURCES += ffmtransform.cpp
-SOURCES += ffmfilestream.cpp
 
 DEF_FILE = ffmfilter.def
 
