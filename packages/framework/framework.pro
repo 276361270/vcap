@@ -5,6 +5,6 @@ INCLUDEPATH += .
 
 SUBDIRS =   \
       protobase    	\
-      netmod		\
+      protonet		\
       
 	

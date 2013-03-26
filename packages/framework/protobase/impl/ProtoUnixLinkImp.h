@@ -2,7 +2,7 @@
 #define _PROTOCOL_UNIX_LINK_IMP_H_
 #include "ProtoConfig.h"
 
-#include "netmod/netmod.h"
+#include "protonet/protonet.h"
 #include <vector>
 
 
