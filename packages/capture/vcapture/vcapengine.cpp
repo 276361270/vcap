@@ -28,24 +28,3 @@ void	VCapEngine::init()
 	m_pCaptureBuilder->SetFiltergraph(m_pGraphBuilder);
 	m_pGraphBuilder->QueryInterface(IID_IMediaControl,(void**)&m_pMediaControl);	
 }
-
-/*
-void	VCapEngine::startCaptureAudio(const std::wstring& filename)
-{
-	if( !m_pAudioInputFilter || !m_pMediaControl )
-		return;
-	
-	IBaseFilter* ffilter = NULL;
-	m_pCaptureBuilder->SetOutputFileName(&MEDIASUBTYPE_Avi, filename.c_str(), &ffilter, NULL);
-	m_pFileFilter = new VCapFilter(ffilter);
-	m_pGraphBuilder->AddFilter(m_pFileFilter->filter(), L"file");
-
-	m_pCaptureBuilder->RenderStream(&PIN_CATEGORY_CAPTURE, &MEDIATYPE_Audio, m_pAudioInputFilter->filter(), NULL, m_pFileFilter->filter());	
-	m_pMediaControl->Run();
-}
-
-void	VCapEngine::stopCaptureAudio()
-{
-	m_pMediaControl->Stop();
-}
-*/

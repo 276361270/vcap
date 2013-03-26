@@ -20,7 +20,7 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\..\..\bin\include&quot;,&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\libspeex\include&quot;,c:\Qt\4.8.4\mkspecs\win32-msvc2008"
+				AdditionalIncludeDirectories="&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\..\..\bin\include&quot;,&quot;..\..\..\depends\ffmpeg\include&quot;,&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\libspeex\include&quot;,c:\Qt\4.8.4\mkspecs\default"
 				AdditionalOptions="-Zm200 /MP -w34189"
 				AssemblerListingLocation="debug\"
 				BufferSecurityCheck="true"
@@ -40,8 +40,7 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libspeex.lib"
-				AdditionalLibraryDirectories="$(TargetDir)"
+				AdditionalLibraryDirectories="$(TargetDir),$(TargetDir)\..\,..\..\..\depends\ffmpeg\lib"
 				AdditionalOptions="/debugtype:cv,fixup"
 				GenerateDebugInformation="true"
 				IgnoreImportLibrary="true"
@@ -76,7 +75,7 @@
 			UseOfMfc="0">
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\..\..\bin\include&quot;,&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\libspeex\include&quot;,c:\Qt\4.8.4\mkspecs\win32-msvc2008"
+				AdditionalIncludeDirectories="&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\..\..\bin\include&quot;,&quot;..\..\..\depends\ffmpeg\include&quot;,&quot;.&quot;,&quot;..\..\include&quot;,&quot;..\libspeex\include&quot;,c:\Qt\4.8.4\mkspecs\default"
 				AdditionalOptions="-Zm200 /MP -w34189"
 				AssemblerListingLocation="release\"
 				BufferSecurityCheck="true"
@@ -96,8 +95,7 @@
 				Name="VCCustomBuildTool" />
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libspeex.lib"
-				AdditionalLibraryDirectories="$(TargetDir)"
+				AdditionalLibraryDirectories="$(TargetDir),$(TargetDir)\..\,..\..\..\depends\ffmpeg\lib"
 				EnableCOMDATFolding="2"
 				GenerateDebugInformation="true"
 				IgnoreImportLibrary="true"
@@ -133,11 +131,9 @@
 			<File
 				RelativePath="dllmain.cpp" />
 			<File
+				RelativePath="ffmencoder.cpp" />
+			<File
 				RelativePath="vcapaudiocapture.cpp" />
-			<File
-				RelativePath="vcapaudioencoder.cpp" />
-			<File
-				RelativePath="vcapaudioencoderfactory.cpp" />
 			<File
 				RelativePath="vcapcamera.cpp" />
 			<File
@@ -161,13 +157,7 @@
 			<File
 				RelativePath="vcapsamplegrabber.cpp" />
 			<File
-				RelativePath="vcapspxencfilter.cpp" />
-			<File
 				RelativePath="vcapvideocapture.cpp" />
-			<File
-				RelativePath="vcapvideoencoder.cpp" />
-			<File
-				RelativePath="vcapvideoencoderfactory.cpp" />
 			<File
 				RelativePath="vcapvmrrender.cpp" />
 		</Filter>
@@ -176,11 +166,9 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
+				RelativePath="ffmencoder.h" />
+			<File
 				RelativePath="vcapaudiocapture.h" />
-			<File
-				RelativePath="vcapaudioencoder.h" />
-			<File
-				RelativePath="vcapaudioencoderfactory.h" />
 			<File
 				RelativePath="vcapcamera.h" />
 			<File
@@ -206,13 +194,7 @@
 			<File
 				RelativePath="vcapsamplegrabber.h" />
 			<File
-				RelativePath="vcapspxencfilter.h" />
-			<File
 				RelativePath="vcapvideocapture.h" />
-			<File
-				RelativePath="vcapvideoencoder.h" />
-			<File
-				RelativePath="vcapvideoencoderfactory.h" />
 			<File
 				RelativePath="vcapvmrrender.h" />
 		</Filter>

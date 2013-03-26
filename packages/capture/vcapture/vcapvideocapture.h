@@ -6,7 +6,7 @@
 class VCapEngine;
 class VCapCamera;
 class VCapVMRRender;
-class VCapVideoEncoder;
+class FfmEncoder;
 class VCapFileFilter;
 class VCapVideoCapture : public IVCapVideoCapture
 {
@@ -25,7 +25,7 @@ private:
 	VCapEngine*		m_pEngine;
 	std::wstring	m_wstrFileName;	
 	VCapCamera*		m_pCamera;
-	VCapVideoEncoder*	m_pEncoder;		
+	FfmEncoder*		m_pEncoder;		
 	VCapFileFilter*	m_pFileFilter;
 	VCapVMRRender*	m_pVMRRender;
 

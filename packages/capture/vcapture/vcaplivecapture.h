@@ -6,7 +6,7 @@
 class VCapEngine;
 class VCapCamera;
 class VCapVMRRender;
-class VCapVideoEncoder;
+class FfmEncoder;
 class VCapLiveCapture : public IVCapLiveCapture
 {
 public:
@@ -21,7 +21,7 @@ public:
 private:
 	VCapEngine*		m_pEngine;	
 	VCapCamera*		m_pCamera;
-	VCapVideoEncoder*	m_pEncoder;	
+	FfmEncoder*		m_pFfmEncoder;
 	VCapVMRRender*	m_pVMRRender;
 
 	std::vector<VCapCamera*>	m_arrCameras;

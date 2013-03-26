@@ -3,17 +3,16 @@
 #include "vcapcamera.h"
 #include "vcapenginefactory.h"
 #include "vcapcamerafactory.h"
-#include "vcapvideoencoderfactory.h"
 #include "vcapvmrrender.h"
 #include "vcapfilefilter.h"
-#include "vcapvideoencoder.h"
 #include "vcapfilter.h"
+#include "ffmencoder.h"
 
 VCapVideoCapture::VCapVideoCapture()
 {
 	m_pEngine = VCapEngineFactory::getInstance();	
 	m_pCamera = NULL;
-	m_pEncoder = VCapVideoEncoderFactory::findFilter(L"x264");
+	m_pEncoder = new FfmEncoder();
 	m_pFileFilter = NULL;
 	m_pVMRRender = new VCapVMRRender();
 
@@ -55,7 +54,7 @@ int		VCapVideoCapture::startCapture(int hWnd)
 		return VCAP_ERROR_NO_X264_FILTER;
 
 	m_pEngine->getGraphBuilder()->AddFilter( m_pCamera->filter()->filter(), L"Camera");
-	m_pEngine->getGraphBuilder()->AddFilter( m_pEncoder->filter()->filter(), L"X264 Encoder");
+	m_pEngine->getGraphBuilder()->AddFilter( m_pEncoder->filter()->filter(), L"Ffm Encoder");
 	m_pEngine->getGraphBuilder()->AddFilter( m_pFileFilter->filter()->filter(), L"File Writer");
 	//m_pEngine->getGraphBuilder()->AddFilter( m_pNetFilter->filter()->filter(), L"Net Writer");
 	m_pEngine->getGraphBuilder()->AddFilter( m_pVMRRender->filter()->filter(), L"VMR9 Render");

@@ -8,6 +8,7 @@ class VCapAudioEncoder;
 class VCapFileFilter;
 class VCapMic;
 class VCapSpxEncFilter;
+class FfmEncoder;
 class VCapAudioCapture : public IVCapAudioCapture
 {
 public:
@@ -26,7 +27,8 @@ private:
 
 	VCapMic*			m_pMic;	
 	VCapFileFilter*		m_pFileFilter;
-	VCapSpxEncFilter*	m_pSpxFilter;
+	//VCapSpxEncFilter*	m_pSpxFilter;
+	FfmEncoder*			m_pFfmEncoder;
 
 	std::vector<VCapMic*>	m_arrMics;
 };

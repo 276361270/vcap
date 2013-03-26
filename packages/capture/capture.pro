@@ -7,6 +7,7 @@ SUBDIRS =   		\
 	  baseclasses	\
       vcapture      \
       x264filter	\
-      speexfilter		\
+      speexfilter	\
+      ffmfilter		\
       
 	

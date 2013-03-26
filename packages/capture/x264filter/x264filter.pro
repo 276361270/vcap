@@ -21,6 +21,6 @@ DEF_FILE = x264filter.def
 INCLUDEPATH += ../baseclasses
 
 LIBS += baseclasses.lib
-LIBS += libx264-130.lib
+LIBS += libx264.lib
 LIBS += Strmiids.lib
 LIBS += winmm.lib

@@ -21,5 +21,6 @@ DEF_FILE = spxfilter.def
 INCLUDEPATH += ../baseclasses
 
 LIBS += baseclasses.lib
+LIBS += libspeex.lib
 LIBS += Strmiids.lib
 LIBS += winmm.lib

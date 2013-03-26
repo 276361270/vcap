@@ -12,6 +12,7 @@
 #include <initguid.h>
 #include "capture/ispxfilter.h"
 #include "capture/ix264filter.h"
+#include "capture/iffmfilter.h"
 
 #pragma include_alias( "dxtrans.h", "qedit.h" )
 #define __IDxtCompositor_INTERFACE_DEFINED__

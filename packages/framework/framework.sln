@@ -1,0 +1,28 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "protobase", "protobase\protobase.vcproj", "{45372749-4E86-3AE4-9084-F6953D0089DC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FA2E9FAD-A6FE-3517-A8B7-C11D09CEDD1F} = {FA2E9FAD-A6FE-3517-A8B7-C11D09CEDD1F}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "netmod", "netmod\netmod.vcproj", "{FA2E9FAD-A6FE-3517-A8B7-C11D09CEDD1F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{45372749-4E86-3AE4-9084-F6953D0089DC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{45372749-4E86-3AE4-9084-F6953D0089DC}.Debug|Win32.Build.0 = Debug|Win32
+		{45372749-4E86-3AE4-9084-F6953D0089DC}.Release|Win32.ActiveCfg = Release|Win32
+		{45372749-4E86-3AE4-9084-F6953D0089DC}.Release|Win32.Build.0 = Release|Win32
+		{FA2E9FAD-A6FE-3517-A8B7-C11D09CEDD1F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FA2E9FAD-A6FE-3517-A8B7-C11D09CEDD1F}.Debug|Win32.Build.0 = Debug|Win32
+		{FA2E9FAD-A6FE-3517-A8B7-C11D09CEDD1F}.Release|Win32.ActiveCfg = Release|Win32
+		{FA2E9FAD-A6FE-3517-A8B7-C11D09CEDD1F}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

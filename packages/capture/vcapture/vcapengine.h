@@ -16,8 +16,6 @@ public:
 
 public:
 	void	init();
-	//void	startCaptureAudio(const std::wstring& filename);
-	//void	stopCaptureAudio();
 
 public:
 	ICaptureGraphBuilder2*	getCaptureBuilder() { return m_pCaptureBuilder; }

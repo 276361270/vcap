@@ -25,6 +25,9 @@ public:
 
 private:
 	VCapFilter*		m_pFilter;
+	IAMStreamConfig*m_pConfig;
+	AM_MEDIA_TYPE*	m_pFormat;
+	WAVEFORMATEX*	m_pWaveInfo;
 };
 
 #endif

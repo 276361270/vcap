@@ -8,8 +8,6 @@ INCLUDEPATH += ./
 INCLUDEPATH += ../../include
 INCLUDEPATH += ../libspeex/include
 
-LIBS += libspeex.lib
-
 # Input
 HEADERS += 	\
         vcapaudiocapture.h      \
@@ -21,17 +19,13 @@ HEADERS += 	\
         vcapfilter.h			\
         vcapcamera.h			\
         vcapcamerafactory.h		\
-        vcapvideoencoder.h		\
-        vcapvideoencoderfactory.h	\
         vcapvmrrender.h			\
         vcapfilefilter.h		\
-        vcapaudioencoder.h		\
-        vcapaudioencoderfactory.h\
         vcapmic.h				\
         vcapmicfactory.h		\
         vcapsamplegrabber.h		\
         vcaplivecapture.h		\
-        vcapspxencfilter.h		\
+        ffmencoder.h			\
         
             
 
@@ -46,17 +40,13 @@ SOURCES += 	\
         dllmain.cpp				\
         vcapcamera.cpp			\
         vcapcamerafactory.cpp	\
-        vcapvideoencoder.cpp	\
-        vcapvideoencoderfactory.cpp	\
         vcapvmrrender.cpp		\
         vcapfilefilter.cpp		\
-        vcapaudioencoder.cpp	\
-        vcapaudioencoderfactory.cpp	\
         vcapmic.cpp				\
         vcapmicfactory.cpp		\
         vcapsamplegrabber.cpp	\
         vcaplivecapture.cpp		\
-        vcapspxencfilter.cpp	\
+        ffmencoder.cpp			\
             
             
             

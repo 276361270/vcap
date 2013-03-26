@@ -1,4 +1,4 @@
 vcap
 ====
 
-video capture
+video capture base for dshow.
