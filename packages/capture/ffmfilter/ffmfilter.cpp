@@ -1,6 +1,7 @@
 #include "ffmfilter.h"
 #include "ffmtransform.h"
 #include "ffmlog.h"
+#include "ffmutil.h"
 
 FfmFilter::FfmFilter(LPUNKNOWN punk, HRESULT *phr) 
 : CTransformFilter(STR_FFMFILTER, punk, CLSID_FFMFILTER) 
@@ -47,31 +48,41 @@ HRESULT		FfmFilter::Transform(IMediaSample *pSource, IMediaSample *pDest)
     CheckPointer(pSource,E_POINTER);   
     CheckPointer(pDest,E_POINTER);   
 
+	HRESULT hr = S_OK;
+	int	time = 0;
 	BYTE *pSourceBuffer, *pDestBuffer;
     long lSourceSize = pSource->GetActualDataLength();
     pSource->GetPointer(&pSourceBuffer);
     pDest->GetPointer(&pDestBuffer);
 	long lDestSize = pDest->GetActualDataLength();
 
-    //CopyMemory( (PVOID) pDestBuffer,(PVOID) pSourceBuffer,lSourceSize);
-	if( m_pTranform ) 
-	{
-		m_pTranform->onData(m_nMediaType, (char*)pSourceBuffer, lSourceSize, (char*)pDestBuffer, lDestSize);
-	}
-
     // Copy the sample times
     REFERENCE_TIME TimeStart, TimeEnd;
-    if (NOERROR == pSource->GetTime(&TimeStart, &TimeEnd)) {
+	hr = pSource->GetTime(&TimeStart, &TimeEnd);
+    if (NOERROR == hr) {
         pDest->SetTime(&TimeStart, &TimeEnd);
-    }
+		time = TimeStart/10;	//100ns to ms
+	} else if (VFW_E_SAMPLE_TIME_NOT_SET == hr ) {
+		//FFMLOG("FfmFilter.Transform, GetTime returns ret=", hr);
+	}
 
     LONGLONG MediaStart, MediaEnd;
     if (pSource->GetMediaTime(&MediaStart,&MediaEnd) == NOERROR) {
         pDest->SetMediaTime(&MediaStart,&MediaEnd);
     }
 
+	//time is needed to calc the video pts/dts/during.
+	if( m_pTranform ) 
+	{
+		if( time == 0 ) {
+			//if the sample has no time stamp:
+			time = FfmUtil::currentSystemTime();
+		}
+		m_pTranform->onData(m_nMediaType, time, (char*)pSourceBuffer, lSourceSize, (char*)pDestBuffer, lDestSize);
+	}
+
     // Copy the Sync point property
-    HRESULT hr = pSource->IsSyncPoint();
+    hr = pSource->IsSyncPoint();
     if (hr == S_OK) {
         pDest->SetSyncPoint(TRUE);
     }

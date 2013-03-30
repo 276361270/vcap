@@ -52,7 +52,7 @@ void	FfmAacHandler::open() {
 	m_pFrame = avcodec_alloc_frame();
 }
 
-int		FfmAacHandler::onData(char* src, int inlen, char* dest, int outlen) {
+int		FfmAacHandler::onData(LONGLONG time, char* src, int inlen, char* dest, int outlen) {
 	int got_packet = 0;
 	int ret = 0;
 	int num = 0;

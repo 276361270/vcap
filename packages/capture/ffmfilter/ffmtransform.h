@@ -13,7 +13,7 @@ public:
 
 public:
 	void	open();
-	int		onData(int media_type, char* src, int inlen, char* dest, int outlen);
+	int		onData(int media_type, LONGLONG time,  char* src, int inlen, char* dest, int outlen);
 	void	close();
 
 private:

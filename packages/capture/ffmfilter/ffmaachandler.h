@@ -11,7 +11,7 @@ public:
 
 public:
 	void	open();
-	int		onData(char* src, int inlen, char* dest, int outlen);
+	int		onData(LONGLONG time, char* src, int inlen, char* dest, int outlen);
 	void	close();
 
 private:

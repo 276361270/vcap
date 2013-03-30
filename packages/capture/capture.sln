@@ -9,8 +9,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ffmfilter", "ffmfilter\ffmf
 		{27919050-7297-3D88-BE51-34DE562E7CAE} = {27919050-7297-3D88-BE51-34DE562E7CAE}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "testcap", "testcap\testcap.vcproj", "{E07519F7-B3AB-4631-9B47-AAF82337C265}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -29,10 +27,6 @@ Global
 		{64A502B1-A9EB-3CF5-AA11-CC19AF68ACCE}.Debug|Win32.Build.0 = Debug|Win32
 		{64A502B1-A9EB-3CF5-AA11-CC19AF68ACCE}.Release|Win32.ActiveCfg = Release|Win32
 		{64A502B1-A9EB-3CF5-AA11-CC19AF68ACCE}.Release|Win32.Build.0 = Release|Win32
-		{E07519F7-B3AB-4631-9B47-AAF82337C265}.Debug|Win32.ActiveCfg = Debug|Win32
-		{E07519F7-B3AB-4631-9B47-AAF82337C265}.Debug|Win32.Build.0 = Debug|Win32
-		{E07519F7-B3AB-4631-9B47-AAF82337C265}.Release|Win32.ActiveCfg = Release|Win32
-		{E07519F7-B3AB-4631-9B47-AAF82337C265}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

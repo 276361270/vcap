@@ -7,5 +7,3 @@ SUBDIRS =   		\
 	  baseclasses	\
       vcapture      \
       ffmfilter		\
-      
-	

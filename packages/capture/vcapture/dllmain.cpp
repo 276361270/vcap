@@ -1,5 +1,5 @@
-#include "vcapaudiocapture.h"
-#include "vcapvideocapture.h"
+#include "audiocapture.h"
+#include "videocapture.h"
 
 BOOL APIENTRY DllMain( HANDLE hModule, 
 					  DWORD  ul_reason_for_call, 
@@ -11,12 +11,12 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 
 extern "C" __declspec(dllexport) IVCapAudioCapture* __stdcall getAudioCapture()
 {
-	VCapAudioCapture* audio = new VCapAudioCapture();
+	AudioCapture* audio = new AudioCapture();
 	return audio;
 }
 
 extern "C" __declspec(dllexport) IVCapVideoCapture* __stdcall getVideoCapture()
 {
-	VCapVideoCapture* video = new VCapVideoCapture();
+	VideoCapture* video = new VideoCapture();
 	return video;
 }

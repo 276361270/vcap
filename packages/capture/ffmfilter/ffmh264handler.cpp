@@ -9,11 +9,12 @@ FfmH264Handler::FfmH264Handler()
 	m_pStream = NULL;
 	m_pFrame = NULL;
 
-	m_nWidth = 640;
-	m_nHeight = 480;
-	m_nPts = 0;
-	m_nFrameIndex = 0;
-	::av_register_all();
+	m_nSrcWidth = 640;
+	m_nSrcHeight = 480;
+	m_nDestWidth = 320;
+	m_nDestHeight = 240;
+
+	m_nBasePTS = 0;
 }
 
 FfmH264Handler::~FfmH264Handler()
@@ -32,28 +33,22 @@ void	FfmH264Handler::open() {
 
 	m_pCodecContext->strict_std_compliance = FF_COMPLIANCE_EXPERIMENTAL;
 	m_pCodecContext->pix_fmt = AV_PIX_FMT_YUV420P;
-	m_pCodecContext->bit_rate = 500000;
-	m_pCodecContext->width = m_nWidth;
-	m_pCodecContext->height = m_nHeight;
-	m_pCodecContext->channels = 2;
+	m_pCodecContext->bit_rate = 125000;
+	m_pCodecContext->width = m_nDestWidth;
+	m_pCodecContext->height = m_nDestHeight;
 	m_pCodecContext->gop_size = 12;
 	m_pCodecContext->time_base.num = 1;
 	m_pCodecContext->time_base.den = 25;
 
-	m_pCodecContext->dct_algo = 0;
-
-	m_pCodecContext->gop_size = 1;
-	m_pCodecContext->me_pre_cmp = 2;
-	m_pCodecContext->me_method=7;
+	//x264 settings:
 	m_pCodecContext->me_range = 16;
 	m_pCodecContext->max_qdiff = 4;
-	m_pCodecContext->qmin = 10;
 	m_pCodecContext->qmax = 51;
+	m_pCodecContext->qmin = 10;
 	m_pCodecContext->qcompress = 0.6;
-	m_pCodecContext->nsse_weight = 8;
-	m_pCodecContext->i_quant_factor = (float)0.8;
-	m_pCodecContext->b_quant_factor = 1.25;
-	m_pCodecContext->b_quant_offset = 1.25;
+	m_pCodecContext->max_b_frames = 1;
+	m_pCodecContext->keyint_min = 25;
+	//m_pCodecContext->profile = FF_PROFILE_H264_MAIN;
 	if (m_pFormatContext->oformat->flags & AVFMT_GLOBALHEADER)
 		m_pCodecContext->flags |= CODEC_FLAG_GLOBAL_HEADER;
 
@@ -69,55 +64,79 @@ void	FfmH264Handler::open() {
 		return;
 	}
 	::avformat_write_header(m_pFormatContext, NULL);
-	ret = avpicture_alloc(&m_picture, AV_PIX_FMT_YUYV422, m_nWidth, m_nHeight);
+
+	//init the frame objects:
+	m_pFrame = avcodec_alloc_frame();
+	ret = avpicture_alloc((AVPicture*)m_pFrame, AV_PIX_FMT_YUYV422, m_nSrcWidth, m_nSrcHeight);
+	
+	m_pMidFrame = avcodec_alloc_frame();
+	ret = avpicture_alloc((AVPicture*)m_pMidFrame, AV_PIX_FMT_YUV420P, m_nDestWidth, m_nDestHeight);
+
+	//we need to convert AV_PIX_FMT_YUYV422 to AV_PIX_FMT_YUV420P.
+	m_pSwsContext = sws_getContext(m_nSrcWidth, m_nSrcHeight, AV_PIX_FMT_YUYV422,
+		m_nDestWidth, m_nDestHeight, AV_PIX_FMT_YUV420P, 
+		SWS_BICUBIC, NULL, NULL, NULL);
 }
 
-int		FfmH264Handler::onData(char* src, int inlen, char* dest, int outlen) {
+int		FfmH264Handler::onData(LONGLONG time, char* src, int inlen, char* dest, int outlen) {
 	int got_packet = 0;
 	int ret = 0;
 	int num = 0;
+	long long pts = time*10000;
 
+	//ensure preview works:
 	memcpy(dest, src, inlen);
-	av_init_packet(&m_packet);
-	int size = avpicture_get_size(AV_PIX_FMT_YUYV422, m_nWidth, m_nHeight);
-	//::avpicture_alloc(&m_picture, AV_PIX_FMT_YUYV422, m_nWidth, m_nHeight);
-	ret = avpicture_fill(&m_picture, (uint8_t*)src, AV_PIX_FMT_YUYV422, m_nWidth, m_nHeight);
+
+	//Pix format transfer, as H264 only handle AV_PIX_FMT_YUV420P.
+	ret = avpicture_fill((AVPicture*)m_pFrame, (uint8_t*)src, AV_PIX_FMT_YUYV422, m_nSrcWidth, m_nSrcHeight);
 	if( ret < 0 ) {
 		FFMLOG("FfmH264Handler.onData, avpicture_fill failed with ret=", ret);
 		return 0;
 	}
-	m_pFrame = (AVFrame*)&m_picture;
-	m_pFrame->nb_samples = m_nWidth*m_nHeight*2;
-	m_pFrame->pts = av_rescale(m_nFrameIndex++,AV_TIME_BASE*(int64_t)m_pCodecContext->time_base.num, m_pCodecContext->time_base.den);
-	m_pFrame->pict_type = AV_PICTURE_TYPE_NONE;
 
-	if (m_pFormatContext->oformat->flags & AVFMT_RAWPICTURE) {
-		/* Raw video case - directly store the picture in the packet */
-		m_packet.flags        |= AV_PKT_FLAG_KEY;
-		m_packet.stream_index  = m_pStream->index;
-		m_packet.data          = m_picture.data[0];
-		m_packet.size          = sizeof(AVPicture);
+	m_pMidFrame->width = m_nDestWidth;
+	m_pMidFrame->height = m_nDestHeight;
+	m_pMidFrame->pts = pts;
+	m_pMidFrame->pkt_pts = pts;
+	m_pMidFrame->pkt_dts = pts;
+	m_pMidFrame->pkt_duration = 1000*1000/m_pCodecContext->time_base.den;
+	m_pMidFrame->pkt_size = inlen;
+	sws_scale(m_pSwsContext, (const uint8_t * const *)m_pFrame->data, m_pFrame->linesize,
+		0, m_nSrcHeight, m_pMidFrame->data, m_pMidFrame->linesize);
 
-		ret = av_interleaved_write_frame(m_pFormatContext, &m_packet);
-	}  else { 
-		ret = ::avcodec_encode_video2(m_pCodecContext, &m_packet, m_pFrame, &got_packet);
-		if( ret == 0 && got_packet )
-		{
-			if (m_pCodecContext->coded_frame->key_frame)
-				m_packet.flags |= AV_PKT_FLAG_KEY;
-
-			m_packet.stream_index = m_pStream->index;
-			ret = ::av_interleaved_write_frame(m_pFormatContext, &m_packet);
-			if( ret < 0 ) {
-				FFMLOG("FfmH264Handler.onData, avcodec_encode_audio2 failed with ret=", ret);
-			}
-			num++;
+	//dump_frame(m_pMidFrame);
+	av_init_packet(&m_packet);
+	m_packet.size = 0;
+	m_packet.data = NULL;
+	ret = ::avcodec_encode_video2(m_pCodecContext, &m_packet, m_pMidFrame, &got_packet);
+	if( ret == 0 && got_packet != 0 )
+	{
+		if( m_nBasePTS == 0 ) {
+			m_nBasePTS = m_packet.pts;
+			m_packet.pts = 0;
+			m_packet.dts = 0;				
 		} else {
-			//	FFMLOG("FfmH264Handler.onData, avcodec_encode_audio2 failed with ret=", ret);
+			m_packet.pts -= m_nBasePTS;
+			m_packet.dts -= m_nBasePTS;
 		}
+		m_packet.stream_index = 0;
+		m_packet.pts/=100;
+		m_packet.dts/=100;
+		m_packet.priv = NULL;
+
+		if (m_pCodecContext->coded_frame->key_frame) {
+			m_packet.flags |= AV_PKT_FLAG_KEY;
+		}
+		
+		ret = ::av_interleaved_write_frame(m_pFormatContext, &m_packet);
+		if( ret < 0 ) {
+			FFMLOG("FfmH264Handler.onData, avcodec_encode_audio2 failed with ret=", ret);
+		}
+		num++;
+		dump_packet(&m_packet);
+	} else {
+		//	FFMLOG("FfmH264Handler.onData, avcodec_encode_audio2 failed with ret=", ret);
 	}
-	//::avpicture_free(&m_picture);
-	FFMLOG("FfmTransform.onData, inlen/frames=", inlen, num);
 
 	return 0;
 }
@@ -137,4 +156,13 @@ void	FfmH264Handler::close() {
 		avcodec_free_frame(&m_pFrame);
 		m_pFrame = NULL;
 	}
+}
+
+void	FfmH264Handler::dump_frame(AVFrame* frame) {
+	FFMLOG("frame - format/key/pict_type=", frame->format, frame->key_frame, frame->pict_type);
+	FFMLOG("frame - pts/pkg_pts/pkt_dts=", frame->pts, frame->pkt_pts, frame->pkt_dts);
+}
+
+void	FfmH264Handler::dump_packet(AVPacket* packet) {
+	FFMLOG("packet - flags/duration/pts=", packet->flags, packet->duration, packet->pts);
 }

@@ -28,6 +28,8 @@ VCapCamera::VCapCamera(VCapFilter* filter)
 
 	//set the video properties:
 	m_videoInfoHeader.AvgTimePerFrame = 100*10*1000;
+	//m_videoInfoHeader.bmiHeader.biWidth = 480;
+	//m_videoInfoHeader.bmiHeader.biHeight = 320;
 	//hr = m_pStreamConfig->SetFormat(media);
 }
 

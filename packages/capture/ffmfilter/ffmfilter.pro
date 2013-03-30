@@ -11,6 +11,7 @@ HEADERS += ffmtransform.h
 HEADERS += ffmlog.h
 HEADERS += ffmaachandler.h
 HEADERS += ffmh264handler.h
+HEADERS += ffmutil.h
 
 
 SOURCES += dllmain.cpp
@@ -29,5 +30,6 @@ LIBS += baseclasses.lib
 LIBS += avutil.lib
 LIBS += avformat.lib
 LIBS += avcodec.lib
+LIBS += swscale.lib
 LIBS += Strmiids.lib
 LIBS += winmm.lib
