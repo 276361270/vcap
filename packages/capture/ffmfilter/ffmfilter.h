@@ -25,14 +25,15 @@ public:
     HRESULT GetMediaType(int iPosition, CMediaType *pMediaType);
 
 public:
-	virtual void	setMediaType(int type) {m_nMediaType = type;}
+	virtual void	setMediaType(int type);
+	virtual void	setVideoSize(int width, int height);
 
 private:
-    CCritSec    m_EZrgb24Lock;
-    CRefTime    m_effectStartTime;
-    CRefTime    m_effectTime;
+    CCritSec		m_EZrgb24Lock;
+    CRefTime		m_effectStartTime;
+    CRefTime		m_effectTime;
 	FfmTransform*	m_pTranform;
-	int			m_nMediaType;
+	int				m_nMediaType;
 };
 
 #endif

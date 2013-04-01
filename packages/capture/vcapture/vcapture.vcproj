@@ -131,33 +131,33 @@
 			<File
 				RelativePath="audiocapture.cpp" />
 			<File
+				RelativePath="camera.cpp" />
+			<File
 				RelativePath="camerafactory.cpp" />
 			<File
 				RelativePath="dllmain.cpp" />
 			<File
+				RelativePath="dsfilter.cpp" />
+			<File
+				RelativePath="dspin.cpp" />
+			<File
+				RelativePath="engine.cpp" />
+			<File
+				RelativePath="enginefactory.cpp" />
+			<File
 				RelativePath="ffmencoder.cpp" />
+			<File
+				RelativePath="filefilter.cpp" />
 			<File
 				RelativePath="livecapture.cpp" />
 			<File
-				RelativePath="vcapcamera.cpp" />
+				RelativePath="mic.cpp" />
 			<File
-				RelativePath="vcapengine.cpp" />
-			<File
-				RelativePath="vcapenginefactory.cpp" />
-			<File
-				RelativePath="vcapfilefilter.cpp" />
-			<File
-				RelativePath="vcapfilter.cpp" />
-			<File
-				RelativePath="vcapmic.cpp" />
-			<File
-				RelativePath="vcapmicfactory.cpp" />
-			<File
-				RelativePath="vcappin.cpp" />
-			<File
-				RelativePath="vcapvmrrender.cpp" />
+				RelativePath="micfactory.cpp" />
 			<File
 				RelativePath="videocapture.cpp" />
+			<File
+				RelativePath="vmrrender.cpp" />
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -166,33 +166,33 @@
 			<File
 				RelativePath="audiocapture.h" />
 			<File
+				RelativePath="camera.h" />
+			<File
 				RelativePath="camerafactory.h" />
+			<File
+				RelativePath="dsfilter.h" />
+			<File
+				RelativePath="dspin.h" />
+			<File
+				RelativePath="engine.h" />
+			<File
+				RelativePath="enginefactory.h" />
 			<File
 				RelativePath="ffmencoder.h" />
 			<File
+				RelativePath="filefilter.h" />
+			<File
 				RelativePath="livecapture.h" />
 			<File
-				RelativePath="vcapcamera.h" />
+				RelativePath="mic.h" />
+			<File
+				RelativePath="micfactory.h" />
 			<File
 				RelativePath="vcapconfig.h" />
 			<File
-				RelativePath="vcapengine.h" />
-			<File
-				RelativePath="vcapenginefactory.h" />
-			<File
-				RelativePath="vcapfilefilter.h" />
-			<File
-				RelativePath="vcapfilter.h" />
-			<File
-				RelativePath="vcapmic.h" />
-			<File
-				RelativePath="vcapmicfactory.h" />
-			<File
-				RelativePath="vcappin.h" />
-			<File
-				RelativePath="vcapvmrrender.h" />
-			<File
 				RelativePath="videocapture.h" />
+			<File
+				RelativePath="vmrrender.h" />
 		</Filter>
 	</Files>
 	<Globals>

@@ -29,7 +29,6 @@ enum VCAP_VIDEO_FORMAT
 struct IVCapAudioCapture
 {
 	virtual void	setFileName(const wchar_t* filename) = 0;
-	virtual void	setAudioFormat(int format) = 0;
 	virtual int		startCapture() = 0;
 	virtual int		stopCapture() = 0;
 };

@@ -1,9 +1,10 @@
 #include "ffmh264handler.h"
+#include "ffmoutformat.h"
 #include "ffmlog.h"
 
 FfmH264Handler::FfmH264Handler()
 {	
-	m_pFormatContext = NULL;
+	m_pOutFormat = new FfmOutFormat("127.0.0.1", 8002);
 	m_pCodecContext = NULL;
 	m_pCodec = NULL;
 	m_pStream = NULL;
@@ -11,8 +12,8 @@ FfmH264Handler::FfmH264Handler()
 
 	m_nSrcWidth = 640;
 	m_nSrcHeight = 480;
-	m_nDestWidth = 320;
-	m_nDestHeight = 240;
+	m_nDestWidth = 160;
+	m_nDestHeight = 120;
 
 	m_nBasePTS = 0;
 }
@@ -23,22 +24,20 @@ FfmH264Handler::~FfmH264Handler()
 }
 
 void	FfmH264Handler::open() {
-	char* filename = "d:\\out.ts";
-	int ret = ::avformat_alloc_output_context2(&m_pFormatContext, NULL, NULL, filename);
-
+	int ret = 0;
 	m_pCodec = ::avcodec_find_encoder(AV_CODEC_ID_H264);
 
-	m_pStream = ::avformat_new_stream(m_pFormatContext, m_pCodec);
+	m_pStream = ::avformat_new_stream(m_pOutFormat->getFormatContext(), m_pCodec);
 	m_pCodecContext = m_pStream->codec;
 
 	m_pCodecContext->strict_std_compliance = FF_COMPLIANCE_EXPERIMENTAL;
 	m_pCodecContext->pix_fmt = AV_PIX_FMT_YUV420P;
-	m_pCodecContext->bit_rate = 125000;
+	m_pCodecContext->bit_rate = 100000;
 	m_pCodecContext->width = m_nDestWidth;
 	m_pCodecContext->height = m_nDestHeight;
 	m_pCodecContext->gop_size = 12;
 	m_pCodecContext->time_base.num = 1;
-	m_pCodecContext->time_base.den = 25;
+	m_pCodecContext->time_base.den = 12;
 
 	//x264 settings:
 	m_pCodecContext->me_range = 16;
@@ -48,8 +47,8 @@ void	FfmH264Handler::open() {
 	m_pCodecContext->qcompress = 0.6;
 	m_pCodecContext->max_b_frames = 1;
 	m_pCodecContext->keyint_min = 25;
-	//m_pCodecContext->profile = FF_PROFILE_H264_MAIN;
-	if (m_pFormatContext->oformat->flags & AVFMT_GLOBALHEADER)
+	m_pCodecContext->profile = FF_PROFILE_H264_MAIN;
+	if (m_pOutFormat->getFormatContext()->oformat->flags & AVFMT_GLOBALHEADER)
 		m_pCodecContext->flags |= CODEC_FLAG_GLOBAL_HEADER;
 
 	ret = ::avcodec_open2(m_pCodecContext, m_pCodec, NULL);
@@ -57,14 +56,6 @@ void	FfmH264Handler::open() {
 		FFMLOG("FfmH264Handler::open, avcodec_open2 failed with ret=", ret);
 		return;
 	}
-
-	ret = ::avio_open(&m_pFormatContext->pb, filename, AVIO_FLAG_WRITE);
-	if( ret != 0 ) {
-		FFMLOG("FfmH264Handler::open, avio_open failed ret=", ret);
-		return;
-	}
-	::avformat_write_header(m_pFormatContext, NULL);
-
 	//init the frame objects:
 	m_pFrame = avcodec_alloc_frame();
 	ret = avpicture_alloc((AVPicture*)m_pFrame, AV_PIX_FMT_YUYV422, m_nSrcWidth, m_nSrcHeight);
@@ -76,6 +67,8 @@ void	FfmH264Handler::open() {
 	m_pSwsContext = sws_getContext(m_nSrcWidth, m_nSrcHeight, AV_PIX_FMT_YUYV422,
 		m_nDestWidth, m_nDestHeight, AV_PIX_FMT_YUV420P, 
 		SWS_BICUBIC, NULL, NULL, NULL);
+
+	m_pOutFormat->open();
 }
 
 int		FfmH264Handler::onData(LONGLONG time, char* src, int inlen, char* dest, int outlen) {
@@ -119,7 +112,7 @@ int		FfmH264Handler::onData(LONGLONG time, char* src, int inlen, char* dest, int
 			m_packet.pts -= m_nBasePTS;
 			m_packet.dts -= m_nBasePTS;
 		}
-		m_packet.stream_index = 0;
+		m_packet.stream_index = m_pStream->id;
 		m_packet.pts/=100;
 		m_packet.dts/=100;
 		m_packet.priv = NULL;
@@ -128,7 +121,7 @@ int		FfmH264Handler::onData(LONGLONG time, char* src, int inlen, char* dest, int
 			m_packet.flags |= AV_PKT_FLAG_KEY;
 		}
 		
-		ret = ::av_interleaved_write_frame(m_pFormatContext, &m_packet);
+		ret = ::av_interleaved_write_frame(m_pOutFormat->getFormatContext(), &m_packet);
 		if( ret < 0 ) {
 			FFMLOG("FfmH264Handler.onData, avcodec_encode_audio2 failed with ret=", ret);
 		}
@@ -141,17 +134,25 @@ int		FfmH264Handler::onData(LONGLONG time, char* src, int inlen, char* dest, int
 	return 0;
 }
 
+void	FfmH264Handler::setVideoSize(int width, int height)
+{
+	m_nDestWidth = width;
+	m_nDestHeight = height;
+}
+
 void	FfmH264Handler::close() {
-	::av_write_trailer(m_pFormatContext);
+	//::av_write_trailer(m_pFormatContext);
 	if( m_pCodecContext ) {
 		avcodec_close(m_pCodecContext);
 		m_pCodecContext = NULL;
 	}
+	/*
 	if( m_pFormatContext ) {
 		avio_close(m_pFormatContext->pb);
 		avformat_free_context(m_pFormatContext);
 		m_pFormatContext = NULL;
-	}	
+	}
+	*/
 	if( m_pFrame ) {
 		avcodec_free_frame(&m_pFrame);
 		m_pFrame = NULL;

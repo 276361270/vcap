@@ -1,19 +1,19 @@
 #include "audiocapture.h"
-#include "vcapengine.h"
-#include "vcapenginefactory.h"
-#include "vcapmic.h"
-#include "vcapmicfactory.h"
-#include "vcapfilefilter.h"
-#include "vcapfilter.h"
+#include "engine.h"
+#include "enginefactory.h"
+#include "mic.h"
+#include "micfactory.h"
+#include "filefilter.h"
+#include "dsfilter.h"
 #include "ffmencoder.h"
 
 AudioCapture::AudioCapture()
 {	
-	m_pEngine = VCapEngineFactory::getInstance();	
+	m_pEngine = EngineFactory::getInstance();	
 	m_pFfmEncoder = new FfmEncoder(FFM_MEDIA_AUDIO);
 
 	m_pFileFilter = NULL;
-	m_arrMics = VCapMicFactory::enumMics();
+	m_arrMics = MicFactory::enumMics();
 	if( m_arrMics.size() > 0 )
 		m_pMic = m_arrMics[0];
 }
@@ -31,16 +31,12 @@ void	AudioCapture::setFileName(const wchar_t* filename)
 	m_wstrFileName.assign(filename);
 }
 
-void	AudioCapture::setAudioFormat(int format)
-{	
-}
-
 int		AudioCapture::startCapture()
 {
 	HRESULT hr = S_OK;
 
 	if( m_wstrFileName.size() > 0 ) {
-		m_pFileFilter = new VCapFileFilter(m_pEngine, m_wstrFileName.c_str());	
+		m_pFileFilter = new FileFilter(m_pEngine, m_wstrFileName.c_str());	
 	}
 	if( !m_pMic )
 		return VCAP_ERROR_NO_CAMERA;

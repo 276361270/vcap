@@ -3,6 +3,7 @@
 
 #include "ffmconfig.h"
 
+class FfmOutFormat;
 class FfmAacHandler
 {
 public:
@@ -15,7 +16,7 @@ public:
 	void	close();
 
 private:
-	AVFormatContext*	m_pFormatContext;
+	FfmOutFormat*		m_pOutFormat;
 	AVCodecContext*		m_pCodecContext;
 	AVCodec*			m_pCodec;
 	AVStream*			m_pStream;

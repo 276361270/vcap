@@ -3,10 +3,10 @@
 
 #include "vcapconfig.h"
 
-class VCapEngine;
+class Engine;
 class VCapAudioEncoder;
-class VCapFileFilter;
-class VCapMic;
+class FileFilter;
+class Mic;
 class VCapSpxEncFilter;
 class FfmEncoder;
 class AudioCapture : public IVCapAudioCapture
@@ -17,18 +17,17 @@ public:
 
 public:
 	virtual void	setFileName(const wchar_t* filename);
-	virtual void	setAudioFormat(int format);
 	virtual int		startCapture();
 	virtual int		stopCapture();
 
 private:
-	VCapEngine*			m_pEngine;
-	std::wstring		m_wstrFileName;
+	Engine*			m_pEngine;
+	std::wstring	m_wstrFileName;
 
-	VCapMic*			m_pMic;	
-	VCapFileFilter*		m_pFileFilter;
-	FfmEncoder*			m_pFfmEncoder;
-	std::vector<VCapMic*>	m_arrMics;
+	Mic*			m_pMic;	
+	FileFilter*		m_pFileFilter;
+	FfmEncoder*		m_pFfmEncoder;
+	std::vector<Mic*>	m_arrMics;
 };
 
 

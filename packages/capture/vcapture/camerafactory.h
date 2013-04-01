@@ -3,11 +3,11 @@
 
 #include "vcapconfig.h"
 
-class VCapCamera;
+class Camera;
 class CameraFactory
 {
 public:
-	static std::vector<VCapCamera*>		enumCameras();
+	static std::vector<Camera*>		enumCameras();
 
 };
 

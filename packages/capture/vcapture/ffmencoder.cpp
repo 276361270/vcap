@@ -1,5 +1,5 @@
 #include "ffmencoder.h"
-#include "vcapfilter.h"
+#include "dsfilter.h"
 
 FfmEncoder::FfmEncoder(int media_type)
 : m_nMediaType(media_type)
@@ -21,7 +21,7 @@ void	FfmEncoder::init()
 	hr = ::CoCreateInstance(CLSID_FFMFILTER, NULL, CLSCTX_INPROC_SERVER, IID_IBaseFilter, (void**)&filter);
 	if( FAILED(hr) )
 		return;
-	m_pFilter = new VCapFilter(filter);
+	m_pFilter = new DSFilter(filter);
 	filter->QueryInterface(IID_FFMFILTER, (void**)&m_pFfmFilter);
 	m_pFfmFilter->setMediaType(m_nMediaType);
 }

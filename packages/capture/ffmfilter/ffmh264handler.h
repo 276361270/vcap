@@ -3,7 +3,7 @@
 
 #include "ffmconfig.h"
 
-class FfmH264Nal;
+class FfmOutFormat;
 class FfmH264Handler
 {
 public:
@@ -14,13 +14,14 @@ public:
 	void	open();
 	int		onData(LONGLONG time, char* src, int inlen, char* dest, int outlen);
 	void	close();
+	void	setVideoSize(int width, int height);
 
 private:
 	void	dump_frame(AVFrame* frame);
 	void	dump_packet(AVPacket* packet);
 
 private:
-	AVFormatContext*	m_pFormatContext;
+	FfmOutFormat*		m_pOutFormat;
 	AVCodecContext*		m_pCodecContext;
 	AVCodec*			m_pCodec;
 	AVStream*			m_pStream;

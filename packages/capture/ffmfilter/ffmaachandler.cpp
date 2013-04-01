@@ -1,9 +1,11 @@
 #include "ffmaachandler.h"
+#include "ffmoutformat.h"
 #include "ffmlog.h"
 
 FfmAacHandler::FfmAacHandler()
 {	
-	m_pFormatContext = NULL;
+	m_pOutFormat = new FfmOutFormat("127.0.0.1", 8001);
+
 	m_pCodecContext = NULL;
 	m_pCodec = NULL;
 	m_pStream = NULL;
@@ -20,12 +22,10 @@ FfmAacHandler::~FfmAacHandler()
 }
 
 void	FfmAacHandler::open() {
-	char* filename = "d:\\out.aac";
-	int ret = ::avformat_alloc_output_context2(&m_pFormatContext, NULL, NULL, filename);
-
+	int ret = 0;
 	m_pCodec = ::avcodec_find_encoder(AV_CODEC_ID_AAC);
 
-	m_pStream = ::avformat_new_stream(m_pFormatContext, m_pCodec);
+	m_pStream = ::avformat_new_stream(m_pOutFormat->getFormatContext(), m_pCodec);
 	m_pCodecContext = m_pStream->codec;
 
 	m_pCodecContext->strict_std_compliance = FF_COMPLIANCE_EXPERIMENTAL;
@@ -42,14 +42,9 @@ void	FfmAacHandler::open() {
 	}
 
 	m_nFrameSize = m_pCodecContext->frame_size*4;
-	ret = ::avio_open(&m_pFormatContext->pb, filename, AVIO_FLAG_WRITE);
-	if( ret != 0 ) {
-		FFMLOG("FfmTransform::open, avio_open failed ret=", ret);
-		return;
-	}
-	::avformat_write_header(m_pFormatContext, NULL);
-
 	m_pFrame = avcodec_alloc_frame();
+
+	m_pOutFormat->open();
 }
 
 int		FfmAacHandler::onData(LONGLONG time, char* src, int inlen, char* dest, int outlen) {
@@ -70,7 +65,7 @@ int		FfmAacHandler::onData(LONGLONG time, char* src, int inlen, char* dest, int 
 	ret = ::avcodec_encode_audio2(m_pCodecContext, &m_packet, m_pFrame, &got_packet);
 	if( ret == 0 && got_packet )
 	{
-		ret = ::av_write_frame(m_pFormatContext, &m_packet);
+		ret = ::av_write_frame(m_pOutFormat->getFormatContext(), &m_packet);
 		if( ret < 0 ) {
 			FFMLOG("FfmTransform.onData, av_write_frame failed with ret=", ret);
 		}
@@ -84,16 +79,16 @@ int		FfmAacHandler::onData(LONGLONG time, char* src, int inlen, char* dest, int 
 }
 
 void	FfmAacHandler::close() {
-	::av_write_trailer(m_pFormatContext);
+	//::av_write_trailer(m_pFormatContext);
 	if( m_pCodecContext ) {
 		avcodec_close(m_pCodecContext);
 		m_pCodecContext = NULL;
 	}
-	if( m_pFormatContext ) {
-		avio_close(m_pFormatContext->pb);
-		avformat_free_context(m_pFormatContext);
-		m_pFormatContext = NULL;
-	}	
+	//if( m_pFormatContext ) {
+	//	avio_close(m_pFormatContext->pb);
+	//	avformat_free_context(m_pFormatContext);
+	//	m_pFormatContext = NULL;
+	//}	
 	if( m_pFrame ) {
 		avcodec_free_frame(&m_pFrame);
 		m_pFrame = NULL;

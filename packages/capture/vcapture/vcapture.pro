@@ -10,41 +10,41 @@ INCLUDEPATH += ../libspeex/include
 
 # Input
 HEADERS += 	\
-        vcapconfig.h            \
-        vcappin.h               \
-        vcapengine.h			\
-        vcapenginefactory.h		\
-        vcapfilter.h			\
-        vcapcamera.h			\
-        camerafactory.h			\
-        vcapvmrrender.h			\
-        vcapfilefilter.h		\
-        vcapmic.h				\
-        vcapmicfactory.h		\
-        ffmencoder.h			\
-        livecapture.h			\
-        audiocapture.h      	\
-        videocapture.h      	\
+        vcapconfig.h        \
+        dspin.h             \
+        engine.h			\
+        enginefactory.h		\
+        dsfilter.h			\
+        camera.h			\
+        camerafactory.h		\
+        vmrrender.h			\
+        filefilter.h		\
+        mic.h				\
+        micfactory.h		\
+        ffmencoder.h		\
+        livecapture.h		\
+        audiocapture.h      \
+        videocapture.h      \
         
             
 
            
 SOURCES += 	\
-        vcappin.cpp             \
-        vcapengine.cpp          \
-        vcapenginefactory.cpp	\
-        vcapfilter.cpp          \
-        dllmain.cpp				\
-        vcapcamera.cpp			\
-        camerafactory.cpp		\
-        vcapvmrrender.cpp		\
-        vcapfilefilter.cpp		\
-        vcapmic.cpp				\
-        vcapmicfactory.cpp		\
-        ffmencoder.cpp			\
-        livecapture.cpp			\
-        audiocapture.cpp    	\
-        videocapture.cpp    	\
+        dspin.cpp           \
+        engine.cpp          \
+        enginefactory.cpp	\
+        dsfilter.cpp        \
+        dllmain.cpp			\
+        camera.cpp			\
+        camerafactory.cpp	\
+        vmrrender.cpp		\
+        filefilter.cpp		\
+        mic.cpp				\
+        micfactory.cpp		\
+        ffmencoder.cpp		\
+        livecapture.cpp		\
+        audiocapture.cpp    \
+        videocapture.cpp    \
             
             
             

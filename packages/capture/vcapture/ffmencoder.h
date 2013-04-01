@@ -3,7 +3,7 @@
 
 #include "vcapconfig.h"
 
-class VCapFilter;
+class DSFilter;
 class FfmEncoder
 {
 public:
@@ -11,13 +11,13 @@ public:
 	~FfmEncoder();
 
 public:	
-	VCapFilter*	filter() { return m_pFilter; }
+	DSFilter*	filter() { return m_pFilter; }
 
 private:
 	void		init();
 
 private:
-	VCapFilter*		m_pFilter;
+	DSFilter*		m_pFilter;
 	IFfmFilter*		m_pFfmFilter;
 	int				m_nMediaType;
 };

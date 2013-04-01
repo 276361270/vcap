@@ -3,9 +3,9 @@
 
 #include "vcapconfig.h"
 
-class VCapEngine;
-class VCapCamera;
-class VCapVMRRender;
+class Engine;
+class Camera;
+class VMRRender;
 class FfmEncoder;
 class VideoCapture;
 class AudioCapture;

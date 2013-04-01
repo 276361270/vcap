@@ -3,11 +3,11 @@
 
 #include "vcapconfig.h"
 
-class VCapEngine;
-class VCapCamera;
-class VCapVMRRender;
+class Engine;
+class Camera;
+class VMRRender;
 class FfmEncoder;
-class VCapFileFilter;
+class FileFilter;
 class VideoCapture : public IVCapVideoCapture
 {
 public:
@@ -22,14 +22,14 @@ public:
 	virtual void	paint();
 
 private:
-	VCapEngine*		m_pEngine;
+	Engine*		m_pEngine;
 	std::wstring	m_wstrFileName;	
-	VCapCamera*		m_pCamera;
+	Camera*		m_pCamera;
 	FfmEncoder*		m_pEncoder;		
-	VCapFileFilter*	m_pFileFilter;
-	VCapVMRRender*	m_pVMRRender;
+	FileFilter*	m_pFileFilter;
+	VMRRender*	m_pVMRRender;
 
-	std::vector<VCapCamera*>	m_arrCameras;
+	std::vector<Camera*>	m_arrCameras;
 };
 
 

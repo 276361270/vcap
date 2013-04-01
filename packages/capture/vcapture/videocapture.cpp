@@ -1,20 +1,20 @@
 #include "videocapture.h"
-#include "vcapengine.h"
-#include "vcapcamera.h"
-#include "vcapenginefactory.h"
+#include "engine.h"
+#include "camera.h"
+#include "enginefactory.h"
 #include "camerafactory.h"
-#include "vcapvmrrender.h"
-#include "vcapfilefilter.h"
-#include "vcapfilter.h"
+#include "vmrrender.h"
+#include "filefilter.h"
+#include "dsfilter.h"
 #include "ffmencoder.h"
 
 VideoCapture::VideoCapture()
 {
-	m_pEngine = VCapEngineFactory::getInstance();	
+	m_pEngine = EngineFactory::getInstance();	
 	m_pCamera = NULL;
 	m_pEncoder = new FfmEncoder(FFM_MEDIA_VIDEO);
 	m_pFileFilter = NULL;
-	m_pVMRRender = new VCapVMRRender();
+	m_pVMRRender = new VMRRender();
 
 	m_arrCameras = CameraFactory::enumCameras();
 	if( m_arrCameras.size() >= 1 )
@@ -47,7 +47,7 @@ int		VideoCapture::startCapture(int hWnd)
 
 	m_pVMRRender->setHWnd((HWND)hWnd);
 	if( m_wstrFileName.size() != 0 ) {
-		m_pFileFilter = new VCapFileFilter(m_pEngine, m_wstrFileName.c_str());
+		m_pFileFilter = new FileFilter(m_pEngine, m_wstrFileName.c_str());
 	}
 	
 	if( !m_pCamera )

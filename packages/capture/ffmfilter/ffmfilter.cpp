@@ -7,7 +7,6 @@ FfmFilter::FfmFilter(LPUNKNOWN punk, HRESULT *phr)
 : CTransformFilter(STR_FFMFILTER, punk, CLSID_FFMFILTER) 
 {
 	m_pTranform = new FfmTransform();
-	m_pTranform->open();
 	m_nMediaType = 0;
 	LOG_INIT();
 }
@@ -197,3 +196,15 @@ HRESULT FfmFilter::GetMediaType(int iPosition, CMediaType *pMediaType)
 
     return NOERROR;
 }
+
+void	FfmFilter::setMediaType(int type)
+{
+	m_nMediaType = type;
+	m_pTranform->open(type);
+}
+
+void	FfmFilter::setVideoSize(int width, int height)
+{
+	m_pTranform->setVideoSize(width, height);
+}
+

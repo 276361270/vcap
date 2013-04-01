@@ -1,10 +1,10 @@
 #include "camerafactory.h"
-#include "vcapfilter.h"
-#include "vcapcamera.h"
+#include "dsfilter.h"
+#include "camera.h"
 
-std::vector<VCapCamera*>	CameraFactory::enumCameras()
+std::vector<Camera*>	CameraFactory::enumCameras()
 {
-	std::vector<VCapCamera*> cameras;
+	std::vector<Camera*> cameras;
 
 	ICreateDevEnum*	pSysDevEnum=NULL;
 	IEnumMoniker *	pEnumCat=NULL;
@@ -22,8 +22,8 @@ std::vector<VCapCamera*>	CameraFactory::enumCameras()
 	ULONG cFetched;
 	while(pEnumCat->Next(1, &pMoniker, &cFetched) == S_OK)
 	{
-		VCapFilter*	filter = new VCapFilter(pMoniker);
-		cameras.push_back( new VCapCamera(filter) );
+		DSFilter*	filter = new DSFilter(pMoniker);
+		cameras.push_back( new Camera(filter) );
 	}
 
 	return cameras;

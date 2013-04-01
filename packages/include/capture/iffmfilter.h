@@ -17,6 +17,7 @@ DEFINE_GUID(IID_FFMFILTER,
 struct IFfmFilter
 {
 	virtual void	setMediaType(int type) = 0;
+	virtual void	setVideoSize(int width, int height) = 0;
 };
 
 #endif
