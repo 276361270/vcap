@@ -2,16 +2,17 @@
 #define FFMH264HANDLER_H
 
 #include "ffmconfig.h"
+#include "icodechandler.h"
 
 class FfmOutFormat;
-class FfmH264Handler
+class FfmH264Handler : public ICodecHandler
 {
 public:
 	FfmH264Handler();
 	~FfmH264Handler();
 
 public:
-	void	setup(char* ip, int port, char* fmt, char* stream);
+	int		setup(char* ip, int port, char* fmt, char* stream);
 	int		onData(LONGLONG time, char* src, int inlen, char* dest, int outlen);
 	void	close();
 	void	setVideoSize(int width, int height);

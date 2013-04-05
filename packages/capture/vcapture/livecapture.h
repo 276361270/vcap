@@ -21,7 +21,6 @@ public:
 	virtual void	paint();
 
 private:
-	Engine*			m_pEngine;
 	VideoCapture*	m_pVideoCapture;
 	AudioCapture*	m_pAudioCapture;
 };

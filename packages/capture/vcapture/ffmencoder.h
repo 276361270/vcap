@@ -11,7 +11,7 @@ public:
 	~FfmEncoder();
 
 public:	
-	void		setup(int media_type, char* ip, int port, char* app, char* stream);
+	int			setup(int media_type, char* ip, int port, char* app, char* stream);
 	DSFilter*	filter() { return m_pFilter; }
 
 private:

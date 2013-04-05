@@ -6,6 +6,7 @@
 class FfmOutFormat;
 class FfmAacHandler;
 class FfmH264Handler;
+struct ICodecHandler;
 class FfmTransform
 {
 public:
@@ -13,14 +14,14 @@ public:
 	~FfmTransform();
 
 public:
-	void	setup(int media_type, char* ip, int port, char* app, char* stream);
-	int		onData(int media_type, LONGLONG time,  char* src, int inlen, char* dest, int outlen);
+	int		setup(int media_type, char* ip, int port, char* app, char* stream);
+	int		onData(LONGLONG time,  char* src, int inlen, char* dest, int outlen);
 	void	close();
 	void	setVideoSize(int width, int height);
 
 private:
-	FfmAacHandler*	m_pAacHandler;
-	FfmH264Handler* m_pH264Handler;
+	ICodecHandler*	m_pCodecHandler;
+	int		m_nMediaType;
 };
 
 #endif

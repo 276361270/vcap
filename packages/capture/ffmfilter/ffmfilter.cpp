@@ -6,8 +6,7 @@
 FfmFilter::FfmFilter(LPUNKNOWN punk, HRESULT *phr) 
 : CTransformFilter(STR_FFMFILTER, punk, CLSID_FFMFILTER) 
 {
-	m_pTranform = new FfmTransform();
-	m_nMediaType = 0;
+	m_pTranform = NULL;
 	LOG_INIT();
 }
 
@@ -76,7 +75,7 @@ HRESULT		FfmFilter::Transform(IMediaSample *pSource, IMediaSample *pDest)
 			time = FfmUtil::currentSystemTime();
 		}
 		//FFMLOG("FfmFilter.Transform, time/size=", time, lSourceSize);
-		m_pTranform->onData(m_nMediaType, time, (char*)pSourceBuffer, lSourceSize, (char*)pDestBuffer, lDestSize);
+		m_pTranform->onData(time, (char*)pSourceBuffer, lSourceSize, (char*)pDestBuffer, lDestSize);
 	}
 
     // Copy the Sync point property
@@ -196,18 +195,10 @@ HRESULT FfmFilter::GetMediaType(int iPosition, CMediaType *pMediaType)
     return NOERROR;
 }
 
-void	FfmFilter::setServerIp(char* ip, int port, char* app, char* stream)
+int		FfmFilter::setup(int media_type, char* ip, int port, char* app, char* stream)
 {
-	m_strIp = ip;
-	m_nPort = port;
-	m_strApp = app;
-	m_strStream = stream;
-}
-
-void	FfmFilter::setMediaType(int type)
-{
-	m_nMediaType = type;
-	m_pTranform->setup(type, const_cast<char*>(m_strIp.c_str()), m_nPort, const_cast<char*>(m_strApp.c_str()), const_cast<char*>(m_strStream.c_str()));
+	m_pTranform = new FfmTransform();
+	return m_pTranform->setup(media_type, ip, port, app, stream);
 }
 
 void	FfmFilter::setVideoSize(int width, int height)

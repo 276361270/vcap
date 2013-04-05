@@ -282,6 +282,10 @@
 				RelativePath="ffmutil.h"
 				>
 			</File>
+			<File
+				RelativePath=".\icodechandler.h"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

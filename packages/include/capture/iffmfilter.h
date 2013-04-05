@@ -11,13 +11,13 @@ DEFINE_GUID(CLSID_FFMFILTER,
 DEFINE_GUID(IID_FFMFILTER,
 0x1cb68a0e, 0x23cc, 0x4701, 0x8b, 0x38, 0x80, 0x6, 0x5c, 0x50, 0xc1, 0x2f);
 
-#define FFM_MEDIA_AUDIO		0
-#define FFM_MEDIA_VIDEO		1
+#define FFM_MEDIA_UNKNOWN	-1
+#define FFM_MEDIA_AUDIO		1
+#define FFM_MEDIA_VIDEO		2
 
 struct IFfmFilter
 {
-	virtual void	setServerIp(char* ip, int port, char* app, char* stream) = 0;
-	virtual void	setMediaType(int type) = 0;
+	virtual int		setup(int media_type, char* ip, int port, char* app, char* stream) = 0;
 	virtual void	setVideoSize(int width, int height) = 0;
 };
 

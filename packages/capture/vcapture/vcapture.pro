@@ -13,7 +13,6 @@ HEADERS += 	\
         vcapconfig.h        \
         dspin.h             \
         engine.h			\
-        enginefactory.h		\
         dsfilter.h			\
         camera.h			\
         camerafactory.h		\
@@ -32,7 +31,6 @@ HEADERS += 	\
 SOURCES += 	\
         dspin.cpp           \
         engine.cpp          \
-        enginefactory.cpp	\
         dsfilter.cpp        \
         dllmain.cpp			\
         camera.cpp			\

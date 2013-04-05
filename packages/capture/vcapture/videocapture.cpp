@@ -1,27 +1,21 @@
 #include "videocapture.h"
 #include "engine.h"
 #include "camera.h"
-#include "enginefactory.h"
 #include "camerafactory.h"
 #include "vmrrender.h"
 #include "filefilter.h"
 #include "dsfilter.h"
 #include "ffmencoder.h"
 
-VideoCapture::VideoCapture(Engine* engine)
+VideoCapture::VideoCapture()
 {
 	//m_pEngine = engine;	
-	m_pEngine = new Engine();
+	m_pEngine = NULL;
 	m_pCamera = NULL;
-	m_pEncoder = new FfmEncoder();
-	m_pEncoder->setup(FFM_MEDIA_VIDEO, "127.0.0.1", 8080, "live", "live1");
+	m_pEncoder = NULL;
 
 	m_pFileFilter = NULL;
-	m_pVMRRender = new VMRRender();
-
-	m_arrCameras = CameraFactory::enumCameras();
-	if( m_arrCameras.size() >= 1 )
-		m_pCamera = m_arrCameras[0];	
+	m_pVMRRender = NULL;	
 }
 
 VideoCapture::~VideoCapture()
@@ -32,6 +26,10 @@ VideoCapture::~VideoCapture()
 		delete m_pEncoder;
 	if( m_pFileFilter )
 		delete m_pFileFilter;	
+	if( m_pEngine ) 
+		delete m_pEngine;
+	if( m_pCamera ) 
+		delete m_pCamera;
 }
 
 void	VideoCapture::setFileName(const wchar_t* filename)
@@ -42,16 +40,27 @@ void	VideoCapture::setFileName(const wchar_t* filename)
 int		VideoCapture::startCapture(int hWnd)
 {	
 	HRESULT hr = S_OK;
+	int ret = VCAP_ERROR_OK;
 
+	m_arrCameras = CameraFactory::enumCameras();
+	if( m_arrCameras.size() >= 1 ) {
+		m_pCamera = m_arrCameras[0];
+	} else {
+		return VCAP_ERROR_NO_CAMERA;
+	}
+
+	m_pEngine = new Engine();
+	m_pEncoder = new FfmEncoder();
+	ret = m_pEncoder->setup(FFM_MEDIA_VIDEO, "127.0.0.1", 8080, "live", "live1");
+	if( ret != VCAP_ERROR_OK ) {
+		return ret;
+	}
+
+	m_pVMRRender = new VMRRender();
 	m_pVMRRender->setHWnd((HWND)hWnd);
 	if( m_wstrFileName.size() != 0 ) {
 		m_pFileFilter = new FileFilter(m_pEngine, m_wstrFileName.c_str());
 	}
-	
-	if( !m_pCamera )
-		return VCAP_ERROR_NO_CAMERA;
-	if( !m_pEncoder )
-		return VCAP_ERROR_NO_X264_FILTER;
 
 	m_pEngine->getGraphBuilder()->AddFilter( m_pCamera->filter()->filter(), L"Camera");
 	m_pEngine->getGraphBuilder()->AddFilter( m_pEncoder->filter()->filter(), L"Ffm Encoder");

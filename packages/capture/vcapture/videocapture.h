@@ -11,7 +11,7 @@ class FileFilter;
 class VideoCapture : public IVCapVideoCapture
 {
 public:
-	VideoCapture(Engine* engine);
+	VideoCapture();
 	~VideoCapture();
 
 public:

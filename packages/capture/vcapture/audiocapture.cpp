@@ -1,23 +1,22 @@
 #include "audiocapture.h"
 #include "engine.h"
-#include "enginefactory.h"
 #include "mic.h"
 #include "micfactory.h"
 #include "filefilter.h"
 #include "dsfilter.h"
 #include "ffmencoder.h"
 
-AudioCapture::AudioCapture(Engine* engine)
+AudioCapture::AudioCapture()
 {	
-	//m_pEngine = engine;	
 	m_pEngine = new Engine();
 	m_pFfmEncoder = new FfmEncoder();
 	m_pFfmEncoder->setup(FFM_MEDIA_AUDIO, "127.0.0.1", 8080, "live", "live2");
 
 	m_pFileFilter = NULL;
 	m_arrMics = MicFactory::enumMics();
-	if( m_arrMics.size() > 0 )
+	if( m_arrMics.size() > 0 ) {
 		m_pMic = m_arrMics[0];
+	}
 }
 
 AudioCapture::~AudioCapture()

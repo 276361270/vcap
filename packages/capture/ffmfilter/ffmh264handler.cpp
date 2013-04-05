@@ -22,14 +22,14 @@ FfmH264Handler::~FfmH264Handler()
 	close();
 }
 
-void	FfmH264Handler::setup(char* ip, int port, char* app, char* stream) {
+int		FfmH264Handler::setup(char* ip, int port, char* app, char* stream) {
 	int ret = 0;
 
 	m_pOutFormat = new FfmRtmpOFormat(ip, port, app, stream);
 	m_pCodec = ::avcodec_find_encoder(AV_CODEC_ID_H264);
 	if( m_pCodec == NULL ) {
 		FFMLOG("FfmH264Handler::setup, avcodec_find_encoder failed.");
-		return;
+		return -1;
 	}
 
 	m_pStream = ::avformat_new_stream(m_pOutFormat->getFormatContext(), m_pCodec);
@@ -59,7 +59,7 @@ void	FfmH264Handler::setup(char* ip, int port, char* app, char* stream) {
 	ret = ::avcodec_open2(m_pCodecContext, m_pCodec, NULL);
 	if( ret != 0 ) {
 		FFMLOG("FfmH264Handler::open, avcodec_open2 failed with ret=", ret);
-		return;
+		return ret;
 	}
 	av_set_pts_info(m_pStream, 32, 1, 1000);  
 
@@ -76,6 +76,8 @@ void	FfmH264Handler::setup(char* ip, int port, char* app, char* stream) {
 		SWS_BICUBIC, NULL, NULL, NULL);
 
 	m_pOutFormat->connectServer();
+
+	return 0;
 }
 
 int		FfmH264Handler::onData(LONGLONG time, char* src, int inlen, char* dest, int outlen) {

@@ -21,7 +21,7 @@ FfmAacHandler::~FfmAacHandler()
 	close();
 }
 
-void	FfmAacHandler::setup(char* ip, int port, char* fmt, char* stream) {
+int		FfmAacHandler::setup(char* ip, int port, char* fmt, char* stream) {
 	int ret = 0;
 
 	m_pOutFormat = new FfmRtmpOFormat(ip, port, fmt, stream);
@@ -40,7 +40,7 @@ void	FfmAacHandler::setup(char* ip, int port, char* fmt, char* stream) {
 	ret = ::avcodec_open2(m_pCodecContext, m_pCodec, NULL);
 	if( ret != 0 ) {
 		FFMLOG("FfmAacHandler.onData, avcodec_open2 failed with ret=", ret);
-		return;
+		return ret;
 	}
 	av_set_pts_info(m_pStream, 32, 1, 1000); 
 
@@ -48,6 +48,8 @@ void	FfmAacHandler::setup(char* ip, int port, char* fmt, char* stream) {
 	m_pFrame = avcodec_alloc_frame();
 
 	m_pOutFormat->connectServer();
+
+	return 0;
 }
 
 int		FfmAacHandler::onData(LONGLONG time, char* src, int inlen, char* dest, int outlen) {

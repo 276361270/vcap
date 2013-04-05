@@ -12,10 +12,9 @@ FfmEncoder::~FfmEncoder()
 {
 }
 
-void	FfmEncoder::setup(int media_type, char* ip, int port, char* app, char* stream)
+int	FfmEncoder::setup(int media_type, char* ip, int port, char* app, char* stream)
 {
-	m_pFfmFilter->setServerIp(ip, port, app, stream);
-	m_pFfmFilter->setMediaType(media_type);
+	return m_pFfmFilter->setup(media_type, ip, port, app, stream);
 }
 
 void	FfmEncoder::init()
@@ -27,7 +26,5 @@ void	FfmEncoder::init()
 	if( FAILED(hr) )
 		return;
 	m_pFilter = new DSFilter(filter);
-	filter->QueryInterface(IID_FFMFILTER, (void**)&m_pFfmFilter);
-	
-	
+	filter->QueryInterface(IID_FFMFILTER, (void**)&m_pFfmFilter);	
 }

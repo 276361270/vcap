@@ -3,13 +3,11 @@
 #include "camera.h"
 #include "videocapture.h"
 #include "audiocapture.h"
-#include "enginefactory.h"
 
 LiveCapture::LiveCapture()
 {
-	m_pEngine = EngineFactory::getInstance();
-	m_pVideoCapture = new VideoCapture(m_pEngine);
-	m_pAudioCapture = new AudioCapture(m_pEngine);
+	m_pVideoCapture = new VideoCapture();
+	m_pAudioCapture = new AudioCapture();
 }
 
 LiveCapture::~LiveCapture()
@@ -18,8 +16,6 @@ LiveCapture::~LiveCapture()
 		delete m_pVideoCapture;
 	if( m_pAudioCapture )
 		delete m_pAudioCapture;
-	if( m_pEngine ) 
-		delete m_pEngine;
 }
 
 int		LiveCapture::startCapture(int hWnd)
@@ -32,7 +28,8 @@ int		LiveCapture::startCapture(int hWnd)
 
 int		LiveCapture::stopCapture()
 {
-	m_pEngine->stop();
+	m_pVideoCapture->stopCapture();
+	m_pAudioCapture->stopCapture();
 	return 0;
 }
 
