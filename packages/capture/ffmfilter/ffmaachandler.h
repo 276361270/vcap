@@ -26,8 +26,6 @@ private:
 	int		m_nSampleRate;
 	int		m_nBitRate;
 	int		m_nChannels;
-	
-	int		m_nFrameSize;
 	int		m_nSamples;
 };
 

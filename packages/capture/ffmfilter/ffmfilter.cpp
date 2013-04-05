@@ -70,10 +70,7 @@ HRESULT		FfmFilter::Transform(IMediaSample *pSource, IMediaSample *pDest)
 	//time is needed to calc the video pts/dts/during.
 	if( m_pTranform ) 
 	{
-		if( time == 0 ) {
-			//if the sample has no time stamp:
-			time = FfmUtil::currentSystemTime();
-		}
+		time = FfmUtil::currentSystemTime();
 		//FFMLOG("FfmFilter.Transform, time/size=", time, lSourceSize);
 		m_pTranform->onData(time, (char*)pSourceBuffer, lSourceSize, (char*)pDestBuffer, lDestSize);
 	}

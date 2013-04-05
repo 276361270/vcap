@@ -11,7 +11,7 @@ FfmAacHandler::FfmAacHandler()
 	m_pStream = NULL;
 	m_pFrame = NULL;
 	m_nSampleRate = 44100;
-	m_nBitRate = 64000;
+	m_nBitRate = 128000;
 	m_nChannels = 2;
 	m_nSamples = m_nSampleRate*20/1000;
 }
@@ -43,8 +43,6 @@ int		FfmAacHandler::setup(char* ip, int port, char* fmt, char* stream) {
 		return ret;
 	}
 	av_set_pts_info(m_pStream, 32, 1, 1000); 
-
-	m_nFrameSize = m_pCodecContext->frame_size*4;
 	m_pFrame = avcodec_alloc_frame();
 
 	m_pOutFormat->connectServer();
@@ -70,7 +68,7 @@ int		FfmAacHandler::onData(LONGLONG time, char* src, int inlen, char* dest, int 
 	m_pFrame->pkt_pts = pts;
 	m_pFrame->pkt_dts = pts;
 	m_pFrame->pkt_size = inlen;
-	m_pFrame->pkt_duration = 0;
+	m_pFrame->pkt_duration = m_nSamples;
 
 	av_init_packet(&m_packet);
 	m_packet.size = 0;
@@ -81,7 +79,7 @@ int		FfmAacHandler::onData(LONGLONG time, char* src, int inlen, char* dest, int 
 		m_packet.stream_index = m_pStream->index;
 		m_packet.priv = NULL;
 
-		ret = ::av_write_frame(m_pOutFormat->getFormatContext(), &m_packet);
+		ret = ::av_interleaved_write_frame(m_pOutFormat->getFormatContext(), &m_packet);
 		if( ret < 0 ) {
 			FFMLOG("FfmAacHandler.onData, av_write_frame failed with ret=", ret);
 		}
