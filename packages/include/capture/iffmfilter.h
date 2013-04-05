@@ -16,6 +16,7 @@ DEFINE_GUID(IID_FFMFILTER,
 
 struct IFfmFilter
 {
+	virtual void	setServerIp(char* ip, int port, char* app, char* stream) = 0;
 	virtual void	setMediaType(int type) = 0;
 	virtual void	setVideoSize(int width, int height) = 0;
 };

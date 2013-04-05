@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   width="587" height="522" minWidth="955" minHeight="600">
+	
+	<fx:Script>
+		<![CDATA[
+			private var mConnection:NetConnection = null;
+			private var mStream:NetStream = null;
+			private var mVideo:Video = null;
+			
+			protected function btnPlay_clickHandler(event:MouseEvent):void
+			{
+				var url:String = txtURL.text;
+				
+				mConnection = new NetConnection();				
+				mConnection.client = this;
+				mConnection.addEventListener(NetStatusEvent.NET_STATUS, onNetStatus);
+				mConnection.connect(url);
+				
+			}
+			
+			protected function onNetStatus(event:NetStatusEvent) : void {
+				trace("onNetStatus, msg=" + event.info);
+				
+				var streamid:String = txtStream.text;
+				mStream = new NetStream(mConnection);	
+				mVideo = new Video();
+				mVideo.attachNetStream(mStream);
+				videoDisplay.addChild(mVideo);
+				mStream.play(streamid);
+			}
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:TextInput id="txtURL" x="10" y="37" width="363" text="rtmp://127.0.0.1:8080/live"/>
+	<s:Button id="btnPlay" x="417" y="37" label="播放" click="btnPlay_clickHandler(event)"/>
+	<s:VideoDisplay id="videoDisplay" x="10" y="133" width="567" height="383"/>
+	<s:TextInput id="txtStream" x="10" y="82" width="363" text="live1"/>
+</s:Application>

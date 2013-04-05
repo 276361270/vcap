@@ -11,7 +11,7 @@ public:
 	~FfmH264Handler();
 
 public:
-	void	open();
+	void	setup(char* ip, int port, char* fmt, char* stream);
 	int		onData(LONGLONG time, char* src, int inlen, char* dest, int outlen);
 	void	close();
 	void	setVideoSize(int width, int height);
@@ -34,7 +34,6 @@ private:
 	int					m_nSrcHeight;
 	int					m_nDestWidth;
 	int					m_nDestHeight;
-	long long			m_nBasePTS;
 };
 
 #endif

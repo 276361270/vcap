@@ -4,15 +4,13 @@
 #include "ffmh264handler.h"
 #include "ffmlog.h"
 
-static void log_callback(void* ptr, int level,const char* fmt,va_list vl);
 FfmTransform::FfmTransform()
 {	
 	::av_register_all();
 	avformat_network_init();
+	
 	m_pAacHandler = NULL;
 	m_pH264Handler = NULL;
-
-	::av_log_set_callback(log_callback);
 }
 
 FfmTransform::~FfmTransform()
@@ -27,14 +25,14 @@ FfmTransform::~FfmTransform()
 	}
 }
 
-void	FfmTransform::open(int media_type) {
+void	FfmTransform::setup(int media_type, char* ip, int port, char* app, char* stream) {
 	if( media_type == FFM_MEDIA_AUDIO ) {
 		m_pAacHandler = new FfmAacHandler();
-		m_pAacHandler->open();
+		m_pAacHandler->setup(ip, port, app, stream);
 	
 	} else if( media_type == FFM_MEDIA_VIDEO) {
 		m_pH264Handler = new FfmH264Handler();
-		m_pH264Handler->open();
+		m_pH264Handler->setup(ip, port, app, stream);
 	}
 }
 
@@ -71,21 +69,4 @@ void	FfmTransform::setVideoSize(int width, int height)
 	if( m_pH264Handler ) {
 		m_pH264Handler->setVideoSize(width, height);
 	}
-}
-
-static void log_callback(void* ptr, int level,const char* fmt,va_list vl)  
-{
-	/*
-	static FILE *fp = NULL;     
-
-	if(!fp)     
-		fp = fopen("d:\\ffmpeg.log","a+");     
-	if(fp)  
-	{     
-		vfprintf(fp,fmt,vl);     
-		fflush(fp);   
-		fclose(fp);  
-	}  
-	*/
-	printf(fmt, vl);
 }

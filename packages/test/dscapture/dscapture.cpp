@@ -5,6 +5,7 @@ DSCapture::DSCapture()
 	int ret;
 	av_register_all();
 	avdevice_register_all();
+	avformat_network_init();
 	AVInputFormat * a= av_find_input_format("dshow");	
 	// Open the video file
 	m_pInputFormatContext = NULL;
@@ -26,7 +27,7 @@ DSCapture::DSCapture()
 	}
 
 	//output:
-	ret = ::avformat_alloc_output_context2(&m_pOutputFormatContext, NULL, NULL, "d:\\output.ts");
+	ret = ::avformat_alloc_output_context2(&m_pOutputFormatContext, NULL, "flv", "rtmp://127.0.0.1:8080/live/live1");
 	m_pOutputVideoCodec = ::avcodec_find_encoder(AV_CODEC_ID_H264);
 
 	m_pOutputVideoStream = ::av_new_stream(m_pOutputFormatContext, 0);
@@ -40,12 +41,17 @@ DSCapture::DSCapture()
 	m_pOutputVideoCodecContext->bit_rate = 125000;
 	m_pOutputVideoCodecContext->me_range = 16;
 	m_pOutputVideoCodecContext->max_qdiff = 4;
-	m_pOutputVideoCodecContext->qmax = 51;
+	m_pOutputVideoCodecContext->qmax = 15;
 	m_pOutputVideoCodecContext->qmin = 10;
 	m_pOutputVideoCodecContext->qcompress = 0.6;
+	m_pOutputVideoCodecContext->profile = FF_PROFILE_H264_BASELINE;
+	if (m_pOutputFormatContext->oformat->flags & AVFMT_GLOBALHEADER)
+		m_pOutputVideoCodecContext->flags |= CODEC_FLAG_GLOBAL_HEADER;
+	if( m_pOutputVideoCodecContext->flags & AVFMT_GLOBALHEADER )
+		m_pOutputVideoCodecContext->flags |= CODEC_FLAG_GLOBAL_HEADER;
 
 	ret = ::avcodec_open2(m_pOutputVideoCodecContext, m_pOutputVideoCodec, NULL);
-	ret = ::avio_open(&m_pOutputFormatContext->pb, "d:\\output.ts", AVIO_FLAG_WRITE);
+	ret = ::avio_open(&m_pOutputFormatContext->pb, "rtmp://127.0.0.1:8080/live/live1", AVIO_FLAG_WRITE);
 	::avformat_write_header(m_pOutputFormatContext, NULL);
 
 	//frame to hold the decoded data:
@@ -99,6 +105,7 @@ void	DSCapture::start()
 		::av_init_packet(&m_packet);
 		ret = ::avcodec_encode_video2(m_pOutputVideoCodecContext, &m_packet, m_pMidFrame, &got_packet);
 		if( ret == 0 && got_packet ) {
+			/*
 			if( m_nBasePTS == 0 ) {
 				m_nBasePTS = m_packet.pts;
 				m_packet.pts = 0;
@@ -107,9 +114,10 @@ void	DSCapture::start()
 				m_packet.pts -= m_nBasePTS;
 				m_packet.dts -= m_nBasePTS;
 			}
-			m_packet.stream_index = 0;
+			*/
 			m_packet.pts/=100;
 			m_packet.dts/=100;
+			m_packet.stream_index = m_pOutputVideoStream->index;
 			if( m_pOutputVideoCodecContext->coded_frame->key_frame ) {
 				m_packet.flags = AV_PKT_FLAG_KEY;
 				printf("key frame\r\n");

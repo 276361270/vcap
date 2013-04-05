@@ -4,7 +4,7 @@
 #include "ivcapengine.h"
 #include <stdio.h>
 
-inline IVCapAudioCapture*	loadAudioCapture()
+inline IVCapLiveCapture*	loadLiveCapture()
 {
 	HMODULE hModule = LoadLibraryA("vcapture.dll");
 	if( !hModule || hModule == INVALID_HANDLE_VALUE )
@@ -14,23 +14,8 @@ inline IVCapAudioCapture*	loadAudioCapture()
 		return NULL;
 	}
 
-	typedef IVCapAudioCapture* (__stdcall *GETAUDIOCAPTURE_FUNC)();
-	GETAUDIOCAPTURE_FUNC func = (GETAUDIOCAPTURE_FUNC)GetProcAddress(hModule, "_getAudioCapture@0");
-	if( !func )
-		return NULL;
-
-	return func();
-}
-
-inline IVCapVideoCapture*	loadVideoCapture()
-{
-	HMODULE hModule = LoadLibraryA("vcapture.dll");
-	if( !hModule || hModule == INVALID_HANDLE_VALUE )
-		return NULL;
-
-
-	typedef IVCapVideoCapture* (__stdcall *GETVIDEOCAPTURE_FUNC)();
-	GETVIDEOCAPTURE_FUNC func = (GETVIDEOCAPTURE_FUNC)GetProcAddress(hModule, "_getVideoCapture@0");
+	typedef IVCapLiveCapture* (__stdcall *GETLIVEAPTURE_FUNC)();
+	GETLIVEAPTURE_FUNC func = (GETLIVEAPTURE_FUNC)GetProcAddress(hModule, "_getLiveCapture@0");
 	if( !func )
 		return NULL;
 

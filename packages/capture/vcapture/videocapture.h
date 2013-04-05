@@ -11,12 +11,11 @@ class FileFilter;
 class VideoCapture : public IVCapVideoCapture
 {
 public:
-	VideoCapture();
+	VideoCapture(Engine* engine);
 	~VideoCapture();
 
 public:
 	virtual void	setFileName(const wchar_t* filename);
-	virtual void	setVideoFormat(int format);
 	virtual int		startCapture(int hWnd);
 	virtual int		stopCapture();
 	virtual void	paint();

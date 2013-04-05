@@ -1,8 +1,7 @@
 #include "ffmencoder.h"
 #include "dsfilter.h"
 
-FfmEncoder::FfmEncoder(int media_type)
-: m_nMediaType(media_type)
+FfmEncoder::FfmEncoder()
 {
 	m_pFilter = NULL;
 	m_pFfmFilter = NULL;
@@ -11,6 +10,12 @@ FfmEncoder::FfmEncoder(int media_type)
 
 FfmEncoder::~FfmEncoder()
 {
+}
+
+void	FfmEncoder::setup(int media_type, char* ip, int port, char* app, char* stream)
+{
+	m_pFfmFilter->setServerIp(ip, port, app, stream);
+	m_pFfmFilter->setMediaType(media_type);
 }
 
 void	FfmEncoder::init()
@@ -23,5 +28,6 @@ void	FfmEncoder::init()
 		return;
 	m_pFilter = new DSFilter(filter);
 	filter->QueryInterface(IID_FFMFILTER, (void**)&m_pFfmFilter);
-	m_pFfmFilter->setMediaType(m_nMediaType);
+	
+	
 }

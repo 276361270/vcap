@@ -7,10 +7,12 @@
 #include "dsfilter.h"
 #include "ffmencoder.h"
 
-AudioCapture::AudioCapture()
+AudioCapture::AudioCapture(Engine* engine)
 {	
-	m_pEngine = EngineFactory::getInstance();	
-	m_pFfmEncoder = new FfmEncoder(FFM_MEDIA_AUDIO);
+	//m_pEngine = engine;	
+	m_pEngine = new Engine();
+	m_pFfmEncoder = new FfmEncoder();
+	m_pFfmEncoder->setup(FFM_MEDIA_AUDIO, "127.0.0.1", 8080, "live", "live2");
 
 	m_pFileFilter = NULL;
 	m_arrMics = MicFactory::enumMics();
@@ -60,7 +62,6 @@ int		AudioCapture::startCapture()
 			m_pFfmEncoder->filter()->filter(),
 			NULL);
 	}
-
 	m_pEngine->start();
 
 	return VCAP_ERROR_OK;

@@ -2,6 +2,7 @@
 #define FFMFILTER_H
 
 #include "ffmconfig.h"
+#include <string>
 
 class FfmTransform;
 class FfmFilter : public CTransformFilter, public IFfmFilter
@@ -25,6 +26,7 @@ public:
     HRESULT GetMediaType(int iPosition, CMediaType *pMediaType);
 
 public:
+	virtual void	setServerIp(char* ip, int port, char* app, char* stream);
 	virtual void	setMediaType(int type);
 	virtual void	setVideoSize(int width, int height);
 
@@ -32,8 +34,15 @@ private:
     CCritSec		m_EZrgb24Lock;
     CRefTime		m_effectStartTime;
     CRefTime		m_effectTime;
-	FfmTransform*	m_pTranform;
+
+
 	int				m_nMediaType;
+	std::string		m_strIp;
+	int				m_nPort;
+	std::string		m_strApp;
+	std::string		m_strStream;
+
+	FfmTransform*	m_pTranform;
 };
 
 #endif

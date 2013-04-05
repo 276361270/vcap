@@ -36,7 +36,6 @@ struct IVCapAudioCapture
 struct IVCapVideoCapture
 {
 	virtual void	setFileName(const wchar_t* filename) = 0;
-	virtual void	setVideoFormat(int format) = 0;
 	virtual int		startCapture(int hWnd) = 0;
 	virtual int		stopCapture() = 0;
 	virtual void	paint() = 0;

@@ -13,8 +13,6 @@ FfmFilter::FfmFilter(LPUNKNOWN punk, HRESULT *phr)
 
 FfmFilter::~FfmFilter()
 {
-	if( m_pTranform )
-		delete m_pTranform;
 }
 
 CUnknown *FfmFilter::CreateInstance(LPUNKNOWN punk, HRESULT *phr)
@@ -59,8 +57,8 @@ HRESULT		FfmFilter::Transform(IMediaSample *pSource, IMediaSample *pDest)
     REFERENCE_TIME TimeStart, TimeEnd;
 	hr = pSource->GetTime(&TimeStart, &TimeEnd);
     if (NOERROR == hr) {
-        pDest->SetTime(&TimeStart, &TimeEnd);
-		time = TimeStart/10;	//100ns to ms
+        //pDest->SetTime(&TimeStart, &TimeEnd);
+		//time = TimeStart/10;	//100ns to ms
 	} else if (VFW_E_SAMPLE_TIME_NOT_SET == hr ) {
 		//FFMLOG("FfmFilter.Transform, GetTime returns ret=", hr);
 	}
@@ -77,6 +75,7 @@ HRESULT		FfmFilter::Transform(IMediaSample *pSource, IMediaSample *pDest)
 			//if the sample has no time stamp:
 			time = FfmUtil::currentSystemTime();
 		}
+		//FFMLOG("FfmFilter.Transform, time/size=", time, lSourceSize);
 		m_pTranform->onData(m_nMediaType, time, (char*)pSourceBuffer, lSourceSize, (char*)pDestBuffer, lDestSize);
 	}
 
@@ -197,14 +196,21 @@ HRESULT FfmFilter::GetMediaType(int iPosition, CMediaType *pMediaType)
     return NOERROR;
 }
 
+void	FfmFilter::setServerIp(char* ip, int port, char* app, char* stream)
+{
+	m_strIp = ip;
+	m_nPort = port;
+	m_strApp = app;
+	m_strStream = stream;
+}
+
 void	FfmFilter::setMediaType(int type)
 {
 	m_nMediaType = type;
-	m_pTranform->open(type);
+	m_pTranform->setup(type, const_cast<char*>(m_strIp.c_str()), m_nPort, const_cast<char*>(m_strApp.c_str()), const_cast<char*>(m_strStream.c_str()));
 }
 
 void	FfmFilter::setVideoSize(int width, int height)
 {
 	m_pTranform->setVideoSize(width, height);
 }
-

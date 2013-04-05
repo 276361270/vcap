@@ -8,11 +8,14 @@
 #include "dsfilter.h"
 #include "ffmencoder.h"
 
-VideoCapture::VideoCapture()
+VideoCapture::VideoCapture(Engine* engine)
 {
-	m_pEngine = EngineFactory::getInstance();	
+	//m_pEngine = engine;	
+	m_pEngine = new Engine();
 	m_pCamera = NULL;
-	m_pEncoder = new FfmEncoder(FFM_MEDIA_VIDEO);
+	m_pEncoder = new FfmEncoder();
+	m_pEncoder->setup(FFM_MEDIA_VIDEO, "127.0.0.1", 8080, "live", "live1");
+
 	m_pFileFilter = NULL;
 	m_pVMRRender = new VMRRender();
 
@@ -34,11 +37,6 @@ VideoCapture::~VideoCapture()
 void	VideoCapture::setFileName(const wchar_t* filename)
 {
 	m_wstrFileName.assign(filename);
-}
-
-void	VideoCapture::setVideoFormat(int format)
-{
-
 }
 
 int		VideoCapture::startCapture(int hWnd)
@@ -69,7 +67,6 @@ int		VideoCapture::startCapture(int hWnd)
 		m_pVMRRender->filter()->filter()  );
 
 	m_pEngine->start();
-
 	return VCAP_ERROR_OK;
 }
 

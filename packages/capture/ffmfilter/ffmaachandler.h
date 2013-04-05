@@ -11,7 +11,7 @@ public:
 	~FfmAacHandler();
 
 public:
-	void	open();
+	void	setup(char* ip, int port, char* fmt, char* stream);
 	int		onData(LONGLONG time, char* src, int inlen, char* dest, int outlen);
 	void	close();
 

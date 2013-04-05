@@ -12,7 +12,7 @@ class FfmEncoder;
 class AudioCapture : public IVCapAudioCapture
 {
 public:
-	AudioCapture();
+	AudioCapture(Engine* engine);
 	~AudioCapture();
 
 public:

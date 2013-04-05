@@ -12,8 +12,7 @@ HINSTANCE hInst;								// current instance
 TCHAR szTitle[MAX_LOADSTRING];					// The title bar text
 TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 HWND hWnd;
-IVCapAudioCapture*	pAudioCapture = NULL;
-IVCapVideoCapture*	pVideoCapture = NULL;
+IVCapLiveCapture*	pLiveCapture = NULL;
 
 // Forward declarations of functions included in this code module:
 ATOM				MyRegisterClass(HINSTANCE hInstance);
@@ -43,10 +42,8 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 	{
 		return FALSE;
 	}
-	pAudioCapture = ::loadAudioCapture();
-	pAudioCapture->startCapture();
-	pVideoCapture = ::loadVideoCapture();
-	pVideoCapture->startCapture((int)hWnd);
+	pLiveCapture = ::loadLiveCapture();
+	pLiveCapture->startCapture((int)hWnd);
 
 	hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_TESTCAP));
 
@@ -164,8 +161,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_PAINT:
 		//hdc = BeginPaint(hWnd, &ps);
 		// TODO: Add any drawing code here...
-		if( pVideoCapture )
-			pVideoCapture->paint();
+		if( pLiveCapture )
+			pLiveCapture->paint();
 		//EndPaint(hWnd, &ps);
 		break;
 	case WM_DESTROY:
