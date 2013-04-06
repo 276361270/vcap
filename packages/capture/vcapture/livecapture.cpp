@@ -20,12 +20,16 @@ LiveCapture::~LiveCapture()
 
 void	LiveCapture::setAudioServer(char* ip, int port, char* app, char* stream)
 {
-
+	if( m_pAudioCapture ) {
+		m_pAudioCapture->setServer(ip, port, app, stream);
+	}
 }
 
 void	LiveCapture::setVideoServer(char* ip, int port, char* app, char* stream)
 {
-
+	if( m_pVideoCapture ) {
+		m_pVideoCapture->setServer(ip, port, app, stream);
+	}
 }
 
 int		LiveCapture::startCapture(int hWnd)

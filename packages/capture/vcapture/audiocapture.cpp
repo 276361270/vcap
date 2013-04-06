@@ -57,7 +57,7 @@ int		AudioCapture::startCapture()
 
 	m_pEngine = new Engine();
 	m_pFfmEncoder = new FfmEncoder();
-	m_pFfmEncoder->setup(FFM_MEDIA_AUDIO, const_cast<char*>(m_strIp.c_str()), 8080, const_cast<char*>(m_strApp.c_str()), const_cast<char*>(m_strStream.c_str()) );
+	m_pFfmEncoder->setup(FFM_MEDIA_AUDIO, const_cast<char*>(m_strIp.c_str()), m_nPort, const_cast<char*>(m_strApp.c_str()), const_cast<char*>(m_strStream.c_str()) );
 
 	if( m_wstrFileName.size() > 0 ) {
 		m_pFileFilter = new FileFilter(m_pEngine, m_wstrFileName.c_str());	

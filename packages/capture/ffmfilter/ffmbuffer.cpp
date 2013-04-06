@@ -9,7 +9,10 @@ FfmBuffer::FfmBuffer(int frame_size)
 
 FfmBuffer::~FfmBuffer()
 {
-
+	for( std::list<FfmBufItem>::iterator it = m_arrBuffers.begin(); it != m_arrBuffers.end(); it++ ) {
+		delete[] it->buffer;
+	}
+	m_arrBuffers.clear();
 }
 
 void	FfmBuffer::push(char* src, int len)

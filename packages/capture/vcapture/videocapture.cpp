@@ -64,7 +64,7 @@ int		VideoCapture::startCapture(int hWnd)
 
 	m_pEngine = new Engine();
 	m_pEncoder = new FfmEncoder();
-	ret = m_pEncoder->setup(FFM_MEDIA_VIDEO, const_cast<char*>(m_strIp.c_str()), 8080, const_cast<char*>(m_strApp.c_str()), const_cast<char*>(m_strStream.c_str()) );
+	ret = m_pEncoder->setup(FFM_MEDIA_VIDEO, const_cast<char*>(m_strIp.c_str()), m_nPort, const_cast<char*>(m_strApp.c_str()), const_cast<char*>(m_strStream.c_str()) );
 	if( ret != VCAP_ERROR_OK ) {
 		return ret;
 	}

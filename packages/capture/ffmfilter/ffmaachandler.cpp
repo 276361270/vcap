@@ -83,7 +83,7 @@ int		FfmAacHandler::onData(LONGLONG time, char* src, int inlen, char* dest, int 
 	ret = ::avcodec_fill_audio_frame(m_pFrame, m_pCodecContext->channels, m_pCodecContext->sample_fmt, (uint8_t*)sample_buf, samples, 1);
 	if( ret != 0 ) {
 		FFMLOG("FfmAacHandler.onData, avcodec_fill_audio_frame failed with ret=", ret);
-		return 0;
+		goto exit;
 	}
 
 	av_init_packet(&m_packet);
@@ -106,7 +106,12 @@ int		FfmAacHandler::onData(LONGLONG time, char* src, int inlen, char* dest, int 
 		FFMLOG("FfmAacHandler.onData, avcodec_encode_audio2 failed with ret=", ret);
 	}
 
-	return 0;
+exit:
+	if( sample_buf ) {
+		delete[] sample_buf;
+	}
+
+	return ret;
 }
 
 void	FfmAacHandler::close() {
