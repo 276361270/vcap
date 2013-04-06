@@ -15,6 +15,7 @@ HEADERS += ffmutil.h
 HEADERS += ffmoutformat.h
 HEADERS += ffmrtmpoformat.h
 HEADERS += ffmbuffer.h
+HEADERS += ffmrtpoformat.h
 
 
 SOURCES += dllmain.cpp
@@ -25,6 +26,7 @@ SOURCES += ffmh264handler.cpp
 SOURCES += ffmoutformat.cpp
 SOURCES += ffmrtmpoformat.cpp
 SOURCES += ffmbuffer.cpp
+SOURCES += ffmrtpoformat.cpp
 
 DEF_FILE = ffmfilter.def
 

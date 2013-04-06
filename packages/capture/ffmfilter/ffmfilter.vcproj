@@ -241,6 +241,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ffmrtpoformat.cpp"
+				>
+			</File>
+			<File
 				RelativePath="ffmtransform.cpp"
 				>
 			</File>
@@ -280,6 +284,10 @@
 			</File>
 			<File
 				RelativePath=".\ffmrtmpoformat.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ffmrtpoformat.h"
 				>
 			</File>
 			<File
