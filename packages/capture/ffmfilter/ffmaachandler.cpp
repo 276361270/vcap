@@ -1,6 +1,7 @@
 #include "ffmaachandler.h"
 #include "ffmoutformat.h"
 #include "ffmrtmpoformat.h"
+#include "ffmbuffer.h"
 #include "ffmlog.h"
 
 FfmAacHandler::FfmAacHandler()
@@ -11,9 +12,11 @@ FfmAacHandler::FfmAacHandler()
 	m_pStream = NULL;
 	m_pFrame = NULL;
 	m_nSampleRate = 44100;
-	m_nBitRate = 128000;
+	m_nBitRate = 40000;
 	m_nChannels = 2;
 	m_nSamples = m_nSampleRate*20/1000;
+	m_nFrameSize = 0;
+	m_pBuffer = NULL;
 }
 
 FfmAacHandler::~FfmAacHandler()
@@ -25,17 +28,20 @@ int		FfmAacHandler::setup(char* ip, int port, char* fmt, char* stream) {
 	int ret = 0;
 
 	m_pOutFormat = new FfmRtmpOFormat(ip, port, fmt, stream);
-	m_pCodec = ::avcodec_find_encoder(AV_CODEC_ID_PCM_S16LE);
+	m_pCodec = ::avcodec_find_encoder(AV_CODEC_ID_AAC);
 
 	m_pStream = ::avformat_new_stream(m_pOutFormat->getFormatContext(), m_pCodec);
 	m_pCodecContext = m_pStream->codec;
 
 	m_pCodecContext->strict_std_compliance = FF_COMPLIANCE_EXPERIMENTAL;
+	//m_pCodecContext->profile = FF_PROFILE_AAC_LOW;
 	m_pCodecContext->sample_fmt = AV_SAMPLE_FMT_S16;
 	m_pCodecContext->bit_rate = m_nBitRate;
 	m_pCodecContext->sample_rate = m_nSampleRate;
 	m_pCodecContext->channels = m_nChannels;
 	m_pCodecContext->gop_size = 50;
+	if (m_pOutFormat->getFormatContext()->oformat->flags & AVFMT_GLOBALHEADER)
+		m_pCodecContext->flags |= CODEC_FLAG_GLOBAL_HEADER;
 
 	ret = ::avcodec_open2(m_pCodecContext, m_pCodec, NULL);
 	if( ret != 0 ) {
@@ -43,6 +49,12 @@ int		FfmAacHandler::setup(char* ip, int port, char* fmt, char* stream) {
 		return ret;
 	}
 	av_set_pts_info(m_pStream, 32, 1, 1000); 
+
+	m_nFrameSize = m_pCodecContext->frame_size;
+	if( m_nFrameSize == 0 ) {
+		m_nFrameSize = m_nSamples;
+	}
+	m_pBuffer = new FfmBuffer(m_nFrameSize*m_nChannels*2);
 	m_pFrame = avcodec_alloc_frame();
 
 	m_pOutFormat->connectServer();
@@ -55,20 +67,24 @@ int		FfmAacHandler::onData(LONGLONG time, char* src, int inlen, char* dest, int 
 	int ret = 0;
 	int num = 0;
 	long long pts = time*9/1000;
+	int samples = m_nFrameSize*m_nChannels*av_get_bytes_per_sample(AV_SAMPLE_FMT_S16);
+	char* sample_buf = NULL;
 
+	//construct the samples, maybe inlen<m_nFrameSize*4;
+	m_pBuffer->push(src, inlen);
+	sample_buf = m_pBuffer->pop();
+
+	if( sample_buf == NULL ) {
+		FFMLOG("FfmAacHandler.onData, not enough data.");
+		return -1;
+	}
 	avcodec_get_frame_defaults(m_pFrame);
-
-	m_pFrame->nb_samples = m_nSamples;
-	ret = ::avcodec_fill_audio_frame(m_pFrame, 2, AV_SAMPLE_FMT_S16, (uint8_t*)src, inlen, 1);
+	m_pFrame->nb_samples = m_nFrameSize;
+	ret = ::avcodec_fill_audio_frame(m_pFrame, m_pCodecContext->channels, m_pCodecContext->sample_fmt, (uint8_t*)sample_buf, samples, 1);
 	if( ret != 0 ) {
 		FFMLOG("FfmAacHandler.onData, avcodec_fill_audio_frame failed with ret=", ret);
 		return 0;
 	}
-	m_pFrame->pts = pts;
-	m_pFrame->pkt_pts = pts;
-	m_pFrame->pkt_dts = pts;
-	m_pFrame->pkt_size = inlen;
-	m_pFrame->pkt_duration = m_nSamples;
 
 	av_init_packet(&m_packet);
 	m_packet.size = 0;
@@ -76,6 +92,7 @@ int		FfmAacHandler::onData(LONGLONG time, char* src, int inlen, char* dest, int 
 	ret = ::avcodec_encode_audio2(m_pCodecContext, &m_packet, m_pFrame, &got_packet);
 	if( ret == 0 && got_packet )
 	{
+		m_pFrame->pts = pts;
 		m_packet.stream_index = m_pStream->index;
 		m_packet.priv = NULL;
 
@@ -93,16 +110,10 @@ int		FfmAacHandler::onData(LONGLONG time, char* src, int inlen, char* dest, int 
 }
 
 void	FfmAacHandler::close() {
-	//::av_write_trailer(m_pFormatContext);
 	if( m_pCodecContext ) {
 		avcodec_close(m_pCodecContext);
 		m_pCodecContext = NULL;
 	}
-	//if( m_pFormatContext ) {
-	//	avio_close(m_pFormatContext->pb);
-	//	avformat_free_context(m_pFormatContext);
-	//	m_pFormatContext = NULL;
-	//}	
 	if( m_pFrame ) {
 		avcodec_free_frame(&m_pFrame);
 		m_pFrame = NULL;

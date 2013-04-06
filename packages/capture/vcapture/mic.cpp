@@ -21,7 +21,7 @@ Mic::Mic(DSFilter* filter)
 	hr = m_pFilter->getOutputPin()->pin()->QueryInterface(IID_IAMBufferNegotiation, (void**)&m_pBuffCtl);
 	//hr = m_pBuffCtl->GetAllocatorProperties(&m_bufprops);
 	m_bufprops.cBuffers = 6;
-	m_bufprops.cbBuffer = 882*4;
+	m_bufprops.cbBuffer = 1024*4;
 	m_bufprops.cbAlign = 2;
 	m_bufprops.cbPrefix = 0;
 	hr = m_pBuffCtl->SuggestAllocatorProperties(&m_bufprops);

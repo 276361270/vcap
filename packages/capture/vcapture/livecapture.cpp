@@ -18,6 +18,16 @@ LiveCapture::~LiveCapture()
 		delete m_pAudioCapture;
 }
 
+void	LiveCapture::setAudioServer(char* ip, int port, char* app, char* stream)
+{
+
+}
+
+void	LiveCapture::setVideoServer(char* ip, int port, char* app, char* stream)
+{
+
+}
+
 int		LiveCapture::startCapture(int hWnd)
 {	
 	m_pVideoCapture->startCapture(hWnd);

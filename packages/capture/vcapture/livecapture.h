@@ -16,6 +16,8 @@ public:
 	~LiveCapture();
 
 public:
+	virtual void	setAudioServer(char* ip, int port, char* app, char* stream);
+	virtual void	setVideoServer(char* ip, int port, char* app, char* stream);
 	virtual int		startCapture(int hWnd);
 	virtual int		stopCapture();
 	virtual void	paint();

@@ -12,6 +12,11 @@ AudioCapture::AudioCapture()
 	m_pFfmEncoder = NULL;
 	m_pFileFilter = NULL;
 	m_pMic = NULL;
+
+	m_strIp = "127.0.0.1";
+	m_nPort = 8080;
+	m_strApp = "live";
+	m_strStream = "live2";
 }
 
 AudioCapture::~AudioCapture()
@@ -31,6 +36,14 @@ void	AudioCapture::setFileName(const wchar_t* filename)
 	m_wstrFileName.assign(filename);
 }
 
+void	AudioCapture::setServer(char* ip, int port, char* app, char* stream)
+{
+	m_strIp = ip;
+	m_nPort = port;
+	m_strApp = app;
+	m_strStream = stream;
+}
+
 int		AudioCapture::startCapture()
 {
 	HRESULT hr = S_OK;
@@ -44,7 +57,7 @@ int		AudioCapture::startCapture()
 
 	m_pEngine = new Engine();
 	m_pFfmEncoder = new FfmEncoder();
-	m_pFfmEncoder->setup(FFM_MEDIA_AUDIO, "127.0.0.1", 8080, "live", "live2");
+	m_pFfmEncoder->setup(FFM_MEDIA_AUDIO, const_cast<char*>(m_strIp.c_str()), 8080, const_cast<char*>(m_strApp.c_str()), const_cast<char*>(m_strStream.c_str()) );
 
 	if( m_wstrFileName.size() > 0 ) {
 		m_pFileFilter = new FileFilter(m_pEngine, m_wstrFileName.c_str());	

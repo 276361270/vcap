@@ -34,6 +34,7 @@ enum VCAP_VIDEO_FORMAT
 struct IVCapAudioCapture
 {
 	virtual void	setFileName(const wchar_t* filename) = 0;
+	virtual void	setServer(char* ip, int port, char* app, char* stream) = 0;
 	virtual int		startCapture() = 0;
 	virtual int		stopCapture() = 0;
 };
@@ -41,6 +42,7 @@ struct IVCapAudioCapture
 struct IVCapVideoCapture
 {
 	virtual void	setFileName(const wchar_t* filename) = 0;
+	virtual void	setServer(char* ip, int port, char* app, char* stream) = 0;
 	virtual int		startCapture(int hWnd) = 0;
 	virtual int		stopCapture() = 0;
 	virtual void	paint() = 0;
@@ -48,6 +50,8 @@ struct IVCapVideoCapture
 
 struct IVCapLiveCapture
 {
+	virtual void	setAudioServer(char* ip, int port, char* app, char* stream) = 0;
+	virtual void	setVideoServer(char* ip, int port, char* app, char* stream) = 0;
 	virtual int		startCapture(int hWnd) = 0;
 	virtual int		stopCapture() = 0;
 	virtual void	paint() = 0;

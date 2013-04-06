@@ -5,6 +5,8 @@
 #include "icodechandler.h"
 #include "ffmlog.h"
 
+void ffmpeg_log_callback(void*, int, const char*, va_list);
+
 FfmTransform::FfmTransform()
 {	
 	::av_register_all();
@@ -12,6 +14,8 @@ FfmTransform::FfmTransform()
 	
 	m_pCodecHandler = NULL;
 	m_nMediaType = 0;
+
+	av_log_set_callback(ffmpeg_log_callback);
 }
 
 FfmTransform::~FfmTransform()
@@ -56,3 +60,11 @@ void	FfmTransform::setVideoSize(int width, int height)
 	}
 	*/
 }
+
+void ffmpeg_log_callback(void* ptr, int level, const char*fmt, va_list vl) {
+	char msg[1024];
+	int prefix = 1;
+	av_log_format_line(ptr, level, fmt, vl, msg, 1024, &prefix);
+
+	FFMLOG("ffmpeg_log_callback, ", msg);
+}	

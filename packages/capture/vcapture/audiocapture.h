@@ -17,6 +17,7 @@ public:
 
 public:
 	virtual void	setFileName(const wchar_t* filename);
+	virtual void	setServer(char* ip, int port, char* app, char* stream);
 	virtual int		startCapture();
 	virtual int		stopCapture();
 
@@ -28,6 +29,11 @@ private:
 	FileFilter*		m_pFileFilter;
 	FfmEncoder*		m_pFfmEncoder;
 	std::vector<Mic*>	m_arrMics;
+
+	std::string		m_strIp;
+	int				m_nPort;
+	std::string		m_strApp;
+	std::string		m_strStream;
 };
 
 

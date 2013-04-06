@@ -5,6 +5,7 @@
 #include "icodechandler.h"
 
 class FfmOutFormat;
+class FfmBuffer;
 class FfmAacHandler : public ICodecHandler
 {
 public:
@@ -23,10 +24,12 @@ private:
 	AVStream*			m_pStream;
 	AVPacket			m_packet;
 	AVFrame*			m_pFrame;
-	int		m_nSampleRate;
-	int		m_nBitRate;
-	int		m_nChannels;
-	int		m_nSamples;
+	int					m_nSampleRate;
+	int					m_nBitRate;
+	int					m_nChannels;
+	int					m_nSamples;
+	int					m_nFrameSize;
+	FfmBuffer*			m_pBuffer;
 };
 
 #endif

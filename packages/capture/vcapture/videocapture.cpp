@@ -15,7 +15,12 @@ VideoCapture::VideoCapture()
 	m_pEncoder = NULL;
 
 	m_pFileFilter = NULL;
-	m_pVMRRender = NULL;	
+	m_pVMRRender = NULL;
+
+	m_strIp = "127.0.0.1";
+	m_nPort = 8080;
+	m_strApp = "live";
+	m_strStream = "live1";
 }
 
 VideoCapture::~VideoCapture()
@@ -37,6 +42,14 @@ void	VideoCapture::setFileName(const wchar_t* filename)
 	m_wstrFileName.assign(filename);
 }
 
+void	VideoCapture::setServer(char* ip, int port, char* app, char* stream)
+{
+	m_strIp = ip;
+	m_nPort = port;
+	m_strApp = app;
+	m_strStream = stream;
+}
+
 int		VideoCapture::startCapture(int hWnd)
 {	
 	HRESULT hr = S_OK;
@@ -51,7 +64,7 @@ int		VideoCapture::startCapture(int hWnd)
 
 	m_pEngine = new Engine();
 	m_pEncoder = new FfmEncoder();
-	ret = m_pEncoder->setup(FFM_MEDIA_VIDEO, "127.0.0.1", 8080, "live", "live1");
+	ret = m_pEncoder->setup(FFM_MEDIA_VIDEO, const_cast<char*>(m_strIp.c_str()), 8080, const_cast<char*>(m_strApp.c_str()), const_cast<char*>(m_strStream.c_str()) );
 	if( ret != VCAP_ERROR_OK ) {
 		return ret;
 	}
